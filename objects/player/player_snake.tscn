@@ -1,3 +1,20 @@
-[gd_scene format=3 uid="uid://k4gtnyctrda"]
+[gd_scene load_steps=5 format=3 uid="uid://k4gtnyctrda"]
+
+[ext_resource type="Script" uid="uid://c3s4how4gprfg" path="res://objects/player/player.gd" id="1_xvoyx"]
+[ext_resource type="Script" uid="uid://dg5jqs15gmbgn" path="res://objects/player/snake_mesh.gd" id="2_rcpxh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rcpxh"]
+albedo_color = Color(0.740571, 0.284937, 0.715153, 1)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_rcpxh"]
 
 [node name="PlayerSnake" type="Node3D"]
+script = ExtResource("1_xvoyx")
+metadata/_custom_type_script = "uid://c3s4how4gprfg"
+
+[node name="SnakeMesh" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_rcpxh")
+mesh = SubResource("ArrayMesh_rcpxh")
+script = ExtResource("2_rcpxh")
+points = PackedVector3Array(0, 0, 0, 1, 0, 0, 2, 1, 0, 3, 1, 0)
+metadata/_custom_type_script = "uid://dg5jqs15gmbgn"
