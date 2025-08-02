@@ -1,6 +1,9 @@
 shader_type spatial;
 
+varying flat int id;
+
 void vertex() {
+	id = INSTANCE_ID;
 	// Called for every vertex the material is visible on.
 	MODELVIEW_MATRIX = VIEW_MATRIX * mat4(
 		MAIN_CAM_INV_VIEW_MATRIX[0],
@@ -23,13 +26,13 @@ uniform float intensity_anim_factor : hint_range(0.0, 10.0) = 0.4;
 uniform float anim_speed_modifier : hint_range(0.0, 100.0) = 10.0;
 
 
-float rand(float x) {
-	return fract(sin(x * 1016.2310234) * 43758.5453123);
+float rand(vec2 st) {
+	return fract(sin(dot(st.xy, vec2(1.0+12.9898,78.233))) * 43758.5453123);
 }
 
 // Called for every pixel the material is visible on.
 void fragment() {
-	float rnd = rand(NODE_POSITION_WORLD.x * NODE_POSITION_WORLD.z);
+	float rnd = rand(NODE_POSITION_WORLD.xy);
 	float anim_modifier = sin(TIME * anim_speed_modifier + rnd*PI);
 
 	// Multiply by 2, since distance from top to mid is 0.5 -> we want [0,1] range

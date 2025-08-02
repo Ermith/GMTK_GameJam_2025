@@ -8,6 +8,7 @@ var min_radius: float
 var max_radius: float
 var neighbors: Array[Sector]
 var star: Star
+var spawn: bool = false
 
 func modulo(x: float) -> float:
 	return ((x / 360) - floor(x / 360)) * 360

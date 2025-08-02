@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dw4dsptvti12g"]
+
+[ext_resource type="Script" uid="uid://vbhthyal3f45" path="res://objects/world/scripts/civilization.gd" id="1_yhnpi"]
+
+[node name="Civilization" type="Node3D"]
+script = ExtResource("1_yhnpi")
