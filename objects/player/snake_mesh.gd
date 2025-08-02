@@ -344,3 +344,11 @@ func contains_2dpoint(point: Vector2) -> bool:
 		return false
 	var winding_number: int = get_raw_winding_number(point)
 	return winding_number != 0
+
+# TODO: Ermith test if this works
+func contains_world_coordinates_2dpoint(point: Vector2) -> bool:
+	if not looped:
+		Global.LogError("SnakeMesh.contains_world_coordinates_2dpoint called on non-looping mesh, this is not supported.")
+		return false
+	point -= Vector2(global_position.x, global_position.y)
+	return contains_2dpoint(point)
