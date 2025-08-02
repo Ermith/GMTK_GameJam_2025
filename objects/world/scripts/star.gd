@@ -31,3 +31,13 @@ func can_expand() -> bool:
 			return true
 			
 	return false
+
+func destroy() -> void:
+	for hyper_lane: HyperLane in hyper_lanes:
+		var neighbor: Star = hyper_lane.get_other(self)
+		neighbor.neightbors.erase(self)
+		neighbor.hyper_lanes.erase(hyper_lane)
+		neightbors.erase(neighbor)
+		hyper_lane.queue_free()
+	
+	queue_free()

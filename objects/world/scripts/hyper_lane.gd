@@ -44,3 +44,9 @@ func get_other(this_star: Star) -> Star:
 	if this_star == from: return to
 	else: return from
 	
+func destroy() -> void:
+	from.neightbors.erase(to)
+	to.neightbors.erase(from)
+	from.hyper_lanes.erase(self)
+	to.hyper_lanes.erase(self)
+	queue_free()

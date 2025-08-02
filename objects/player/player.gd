@@ -2,6 +2,7 @@ extends Node3D
 class_name Player
 
 signal ran_out_of_length
+signal looped(snake_mesh: SnakeMesh)
 
 @export var game_stats: GameStats = preload("res://resources/game_stats.tres")
 
@@ -90,6 +91,7 @@ func collision_scan() -> void:
 			get_parent().add_child(loop_effect)
 			loop_effect.init(split_off_points, goodness_to_color(col_goodness))
 			loop_effect.update_points()
+			looped.emit(loop_effect.mesh)
 
 func _physics_process(delta: float) -> void:
 	var moved_length: float = get_speed() * delta
