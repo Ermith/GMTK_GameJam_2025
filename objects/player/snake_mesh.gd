@@ -191,3 +191,29 @@ func refresh_mesh() -> void:
 				indices.append(base_vertex_index + (i + 1) % ring_segments)
 
 	array_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, surface_array)
+
+func tip() -> Vector3:
+	var baked_points: PackedVector3Array = curve.get_baked_points()
+	if baked_points.size() == 0:
+		return Vector3.ZERO
+	return baked_points[baked_points.size() - 1]
+
+
+class PointOnCurve:
+	var point: Vector3
+	var offset: float
+	var direction: Vector3
+
+	func _init(point_: Vector3, offset_: float, direction_: Vector3) -> void:
+		self.point = point_
+		self.offset = offset_
+		self.direction = direction_
+
+
+func closest_point(reference: Vector3) -> PointOnCurve:
+	var offset: float = curve.get_closest_offset(reference)
+	var point: Vector3 = curve.sample_baked(offset, cubic_interpolation)
+	var prev: Vector3 = curve.sample_baked(offset - 0.01, cubic_interpolation)
+	var next: Vector3 = curve.sample_baked(offset + 0.01, cubic_interpolation)
+	var direction: Vector3 = (next - prev).normalized()
+	return PointOnCurve.new(point, offset, direction)

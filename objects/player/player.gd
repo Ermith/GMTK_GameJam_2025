@@ -8,7 +8,7 @@ signal ran_out_of_length
 @export var facing_vector: Vector3 = Vector3(1, 0, 0)
 @export var turning_axis: Vector3 = Vector3(0, 0, 1)
 @export var point_adding_interval: float = 0.2
-@export var initial_length: float = 5.0
+@export var initial_length: float = 20.0
 
 var remaining_length: float = initial_length
 var cur_turning_speed: float = base_turning_speed
@@ -44,10 +44,21 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("swap direction"):
 		swap_direction()
 
+func collision_scan() -> void:
+	var epsilon: float = 0.001
+	var scan_point: Vector3 = snake_mesh.tip() + facing_vector * epsilon
+	var nearest_point: SnakeMesh.PointOnCurve = snake_mesh.closest_point(scan_point)
+	if snake_mesh.tip().distance_to(nearest_point.point) > epsilon / 2:
+		var collision_angle: float = facing_vector.angle_to(nearest_point.direction)
+		var damage_fract: float = abs(sin(collision_angle))
+		Global.LogInfo("Collision detected with point: " + str(nearest_point.point) + ", angle: " + str(collision_angle) + ", damage fraction: " + str(damage_fract))
+	# DebugDraw3D.draw_sphere(nearest_point.point, snake_mesh.radius + 0.1, Color(1, 0, 0), 0)
+
 func _physics_process(delta: float) -> void:
 	var moved_length: float = get_speed() * delta
 	facing_vector = facing_vector.rotated(turning_axis, get_turning_speed() * delta)
 	head_position += facing_vector * moved_length
+	collision_scan()
 	if distance_travelled_since_last_point >= point_adding_interval:
 		snake_mesh.points[-1] = stored_backup_curve_point
 		stored_backup_curve_point = Vector3.ZERO
