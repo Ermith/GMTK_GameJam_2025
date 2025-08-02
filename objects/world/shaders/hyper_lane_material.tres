@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://rlrsoyx8eg7t"]
 
-[ext_resource type="Shader" uid="uid://dq777ep204ums" path="res://objects/world/hyper_lane_shader.gdshader" id="1_m1okm"]
+[ext_resource type="Shader" uid="uid://dq777ep204ums" path="res://objects/world/shaders/hyper_lane_shader.gdshader" id="1_m1okm"]
 
 [resource]
 render_priority = 0

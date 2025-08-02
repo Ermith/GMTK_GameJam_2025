@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://c7l2mq1d2hma"]
 
-[ext_resource type="Script" uid="uid://p6uxeljflq7y" path="res://objects/world/galaxy.gd" id="1_pqysn"]
-[ext_resource type="PackedScene" uid="uid://bh8kb6qsnoko2" path="res://objects/world/star.tscn" id="2_o5pnv"]
+[ext_resource type="Script" uid="uid://p6uxeljflq7y" path="res://objects/world/scripts/galaxy.gd" id="1_pqysn"]
+[ext_resource type="PackedScene" uid="uid://bh8kb6qsnoko2" path="res://objects/world/scenes/star.tscn" id="2_o5pnv"]
 
 [sub_resource type="Environment" id="Environment_o5pnv"]
 background_energy_multiplier = 0.0

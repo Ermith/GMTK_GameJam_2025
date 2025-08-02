@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://l45q1a43exjn"]
 
 [ext_resource type="Script" uid="uid://372750u8m601" path="res://levels/level_base.gd" id="1_a0bpi"]
-[ext_resource type="Material" uid="uid://dvaphy8gqqneb" path="res://objects/world/star_material.tres" id="1_g3ujo"]
+[ext_resource type="Material" uid="uid://dvaphy8gqqneb" path="res://objects/world/shaders/star_material.tres" id="1_g3ujo"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_a0bpi"]
 material = ExtResource("1_g3ujo")
