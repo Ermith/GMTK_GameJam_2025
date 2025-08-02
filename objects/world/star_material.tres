@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dvaphy8gqqneb"]
+
+[ext_resource type="Shader" uid="uid://yy61jhufdvq6" path="res://objects/world/star_shader.gdshader" id="1_8omo1"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_8omo1")
+shader_parameter/in_star_color = Vector3(0, 1, 1)
+shader_parameter/star_color = Color(1, 1, 1, 1)
+shader_parameter/intensity = 2.89
+shader_parameter/sharpness = 15.648
