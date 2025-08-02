@@ -1,8 +1,5 @@
 extends PauseableScreenBase
-class_name PauseScreen 
-
-func _on_resume_button_pressed() -> void:
-	GameInstance.ResumeGame()
+class_name VictoryScreen 
 
 func _on_restart_button_pressed() -> void:
 	GameInstance.TravelToLevel(GameInstance.GameLevels.GAME)

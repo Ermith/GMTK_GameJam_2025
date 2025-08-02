@@ -1,2 +1,0 @@
-extends PauseableScreenBase
-class_name GameOverScreen
