@@ -122,7 +122,7 @@ func CanCinematic() -> bool:
 # This requires some basic setup, see LevelTransitions
 func TravelToNextLevel() -> void:
 	if not CanTravelToNextLevel():
-		Global.LogErrorString("UNVERIFIED ATTEMPT TO ACCESS NEXT LEVEL")
+		Global.LogError("UNVERIFIED ATTEMPT TO ACCESS NEXT LEVEL")
 		return
 	#Global.phase += 1
 	TravelToLevel(LevelTransitions[CurrentLevel])
