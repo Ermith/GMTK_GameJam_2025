@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://ct8p1l2duwx6b"]
+[gd_scene load_steps=8 format=3 uid="uid://ct8p1l2duwx6b"]
 
 [ext_resource type="PackedScene" uid="uid://k4gtnyctrda" path="res://objects/player/player_snake.tscn" id="1_4ob46"]
+[ext_resource type="Script" uid="uid://372750u8m601" path="res://levels/level_base.gd" id="1_p5xoe"]
 [ext_resource type="Script" uid="uid://cedk2hrr3u3k5" path="res://objects/debug/debug_thingie.gd" id="2_ve675"]
 [ext_resource type="Script" uid="uid://dg5jqs15gmbgn" path="res://objects/player/snake_mesh.gd" id="3_8q8xl"]
 
@@ -14,6 +15,8 @@ background_mode = 1
 background_color = Color(0.0402736, 0.271812, 0.150268, 1)
 
 [node name="SnakeTest" type="Node3D"]
+script = ExtResource("1_p5xoe")
+PreferredUI = 5
 
 [node name="PlayerSnake" parent="." instance=ExtResource("1_4ob46")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0591698, 0, 0.0184426)
