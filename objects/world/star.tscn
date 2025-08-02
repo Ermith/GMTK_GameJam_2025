@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://bh8kb6qsnoko2"]
 
 [ext_resource type="Shader" uid="uid://yy61jhufdvq6" path="res://objects/world/star_shader.gdshader" id="1_3dyli"]
-[ext_resource type="Script" uid="uid://c58npnxh4oitp" path="res://objects/world/star.gd" id="1_jdup5"]
+[ext_resource type="Script" path="res://objects/world/star.gd" id="1_jdup5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3dyli"]
 render_priority = 0
