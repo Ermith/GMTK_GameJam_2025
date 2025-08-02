@@ -6,16 +6,28 @@ var shader_material: ShaderMaterial
 @export var STAR_MATERIAL: ShaderMaterial
 
 var neightbors: Array[Star]
+var hyper_lanes: Array[HyperLane]
 var sector: Sector
+var civilization: Civilization
+var color: Color
 
 func _ready() -> void:
 	mesh_instance_3d.material_override = STAR_MATERIAL.duplicate(false)
 	shader_material = mesh_instance_3d.material_override as ShaderMaterial
-	
-	var color: Color
-	color = Color.from_hsv(randf(), 1.0, 1.0)
-	set_color(color)
-	pass
 
-func set_color(color: Color) -> void:
-	shader_material.set_shader_parameter("star_color", color)
+func set_color(in_color: Color) -> void:
+	shader_material.set_shader_parameter("star_color", in_color)
+	color = in_color
+	
+func civilize(in_civilization: Civilization) -> void:
+	civilization = in_civilization
+	set_color(civilization.color)
+	for hyper_lane: HyperLane in hyper_lanes:
+		hyper_lane.civilize(in_civilization, self)
+
+func can_expand() -> bool:
+	for hyper_lane: HyperLane in hyper_lanes:
+		if hyper_lane.get_other(self).civilization == null:
+			return true
+			
+	return false

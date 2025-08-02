@@ -2,6 +2,8 @@ extends Node3D
 
 @export var STAR: PackedScene
 @export var HYPER_LANE: PackedScene
+@export var CIVILIZATION: PackedScene
+@export var civilization_spawn_colors: Array[Color]
 
 var stars: Array[Star]
 
@@ -14,6 +16,15 @@ func ring_area(ring: int, radius_min: float, ring_height: float) -> float:
 
 func calculate_sectors(radius: float, radius_min: float, rings: int, first_ring_segments: int) -> Array[Sector]:
 	var out_sectors: Array[Sector]
+	var non_spawn_sectors: Array[Sector]
+	
+	var civilization_rings: Array[int]
+	var civilization_angles: Array[float]
+	var civilization_spawn_count: int = civilization_spawn_colors.size()
+	for i: int in range(civilization_spawn_count):
+		civilization_rings.append(i)
+		civilization_angles.append((360 / civilization_spawn_count) * i)
+	civilization_rings.shuffle()
 	
 	var radius_diff: float = radius - radius_min
 	var ring_height: float = radius_diff / rings
@@ -33,7 +44,22 @@ func calculate_sectors(radius: float, radius_min: float, rings: int, first_ring_
 			sector.max_radius = radius_min + ring_height * (ring_index + 1)
 			sector.ring = ring_index
 			out_sectors.append(sector)
-		
+			
+			var civilization_index: int = civilization_rings.find(ring_index)
+			if civilization_index != -1 and\
+				sector.contains_angle(civilization_angles[civilization_index]):
+					sector.spawn = true
+					print(civilization_index)
+					civilization_rings.remove_at(civilization_index)
+					civilization_angles.remove_at(civilization_index)
+			else:
+				non_spawn_sectors.append(sector)
+				
+	for i: int in range(civilization_rings.size()):
+		var random_index: int = randi() % non_spawn_sectors.size()
+		non_spawn_sectors[random_index].spawn = true
+		non_spawn_sectors.remove_at(random_index)
+	
 	return out_sectors
 
 func _ready() -> void:
@@ -44,7 +70,7 @@ func _ready() -> void:
 			var star: Star = STAR.instantiate()
 			add_child(star)
 			stars.append(star)
-			star.global_position = Vector3(pos.x, pos.y, 0.0)
+			star.global_position = Vector3(pos.x, pos.y, randf() * 1.0 - 2)
 			#star.set_color(Color.from_hsv(randf(), 1.0, 1.0))
 			star.set_color(Color.DEEP_SKY_BLUE)
 			star.sector = sector
@@ -65,4 +91,15 @@ func _ready() -> void:
 			stars[j].neightbors.append(stars[i])
 			var hyper_lane: HyperLane = HYPER_LANE.instantiate()
 			add_child(hyper_lane)
-			hyper_lane.set_lane(stars[i].global_position, stars[j].global_position)
+			hyper_lane.set_lane(stars[i], stars[j])
+			stars[i].hyper_lanes.append(hyper_lane)
+			stars[j].hyper_lanes.append(hyper_lane)
+	
+	var civilization_index: int = 0
+	for star: Star in stars:
+		if star.sector.spawn:
+			var civilization: Civilization = CIVILIZATION.instantiate()
+			civilization.initizlize(star, civilization_spawn_colors[civilization_index])
+			civilization_index += 1
+			add_child(civilization)
+			
