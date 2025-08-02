@@ -1,3 +1,7 @@
-[gd_scene format=3 uid="uid://d60lah0lbjr5"]
+[gd_scene load_steps=2 format=3 uid="uid://d60lah0lbjr5"]
+
+[ext_resource type="Script" uid="uid://372750u8m601" path="res://levels/level_base.gd" id="1_qc6i3"]
 
 [node name="GameScene" type="Node3D"]
+script = ExtResource("1_qc6i3")
+PreferredUI = 5

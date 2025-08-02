@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://l45q1a43exjn"]
+[gd_scene load_steps=7 format=3 uid="uid://l45q1a43exjn"]
 
+[ext_resource type="Script" uid="uid://372750u8m601" path="res://levels/level_base.gd" id="1_a0bpi"]
 [ext_resource type="Material" uid="uid://dvaphy8gqqneb" path="res://objects/world/star_material.tres" id="1_g3ujo"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_a0bpi"]
@@ -17,6 +18,8 @@ billboard_mode = 1
 material = SubResource("StandardMaterial3D_ftkqg")
 
 [node name="MainMenuScene" type="Node3D"]
+script = ExtResource("1_a0bpi")
+PreferredUI = 1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("QuadMesh_1bgdx")

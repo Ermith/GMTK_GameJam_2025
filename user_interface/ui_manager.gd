@@ -6,13 +6,10 @@ class_name UIManagerScript
 
 # Defines pairs of UI.Mode to PackedScenes representing individual screens
 @export var Screens: Dictionary[UI.Mode, PackedScene] = {}
-@export var PreviousMode: UI.Mode = UI.Mode.MENU
-@export var CurrentMode: UI.Mode = UI.Mode.MENU
+@export var PreviousMode: UI.Mode = UI.Mode.NONE
+@export var CurrentMode: UI.Mode = UI.Mode.NONE
 var CurrentInstance: ScreenBase
 
-func _ready() -> void:
-	_switch_UI(CurrentMode)
-	
 # Switches between different UI Screens
 func _switch_UI(new_mode: UI.Mode) -> void:
 	# Cleans up current screen instance
