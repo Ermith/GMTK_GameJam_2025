@@ -205,12 +205,6 @@ func refresh_mesh() -> void:
 
 	array_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, surface_array)
 
-func tip() -> Vector3:
-	var baked_points: PackedVector3Array = curve.get_baked_points()
-	if baked_points.size() == 0:
-		return Vector3.ZERO
-	return baked_points[baked_points.size() - 1]
-
 
 class PointOnCurve:
 	var point: Vector3

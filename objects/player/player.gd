@@ -3,12 +3,13 @@ class_name Player
 
 signal ran_out_of_length
 
-@export var base_speed: float = 0.5
-@export var base_turning_speed: float = 0.5
+@export var base_speed: float = 1.5
+@export var base_turning_speed: float = PI / 2
 @export var facing_vector: Vector3 = Vector3(1, 0, 0)
 @export var turning_axis: Vector3 = Vector3(0, 0, 1)
 @export var point_adding_interval: float = 0.2
 @export var initial_length: float = 20.0
+@export var collision_radius: float = 0.1
 
 var remaining_length: float = initial_length
 var cur_turning_speed: float = base_turning_speed
@@ -45,14 +46,13 @@ func _input(event: InputEvent) -> void:
 		swap_direction()
 
 func collision_scan() -> void:
-	var epsilon: float = 0.001
-	var scan_point: Vector3 = snake_mesh.tip() + facing_vector * epsilon
+	var scan_point: Vector3 = head_position + facing_vector * collision_radius
 	var nearest_point: SnakeMesh.PointOnCurve = snake_mesh.closest_point(scan_point)
-	if snake_mesh.tip().distance_to(nearest_point.point) > epsilon / 2:
+	if head_position.distance_to(nearest_point.point) > collision_radius / 2:
 		var collision_angle: float = facing_vector.angle_to(nearest_point.direction)
 		var damage_fract: float = abs(sin(collision_angle))
 		Global.LogInfo("Collision detected with point: " + str(nearest_point.point) + ", angle: " + str(collision_angle) + ", damage fraction: " + str(damage_fract))
-	# DebugDraw3D.draw_sphere(nearest_point.point, snake_mesh.radius + 0.1, Color(1, 0, 0), 0)
+		DebugDraw3D.draw_sphere(nearest_point.point, snake_mesh.radius + 0.1, Color(1, 0, 0), 0)
 
 func _physics_process(delta: float) -> void:
 	var moved_length: float = get_speed() * delta
