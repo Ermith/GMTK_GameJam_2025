@@ -16,5 +16,5 @@ metadata/_custom_type_script = "uid://c3s4how4gprfg"
 material_override = SubResource("StandardMaterial3D_rcpxh")
 mesh = SubResource("ArrayMesh_rcpxh")
 script = ExtResource("2_rcpxh")
-points = PackedVector3Array(0, 0, 0, 1, 0, 0, 2, 1, 0, 3, 1, 0)
+points = PackedVector3Array()
 metadata/_custom_type_script = "uid://dg5jqs15gmbgn"
