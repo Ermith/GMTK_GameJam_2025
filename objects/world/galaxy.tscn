@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://c7l2mq1d2hma"]
+
+[ext_resource type="Script" uid="uid://p6uxeljflq7y" path="res://objects/world/galaxy.gd" id="1_pqysn"]
+[ext_resource type="PackedScene" uid="uid://bh8kb6qsnoko2" path="res://objects/world/star.tscn" id="2_o5pnv"]
+
+[sub_resource type="Environment" id="Environment_o5pnv"]
+background_energy_multiplier = 0.0
+
+[node name="Galaxy" type="Node3D"]
+script = ExtResource("1_pqysn")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.82802)
+
+[node name="Star" parent="." instance=ExtResource("2_o5pnv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.36503, 0, -1.06289)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_o5pnv")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bh8kb6qsnoko2"]
+[gd_scene load_steps=6 format=3 uid="uid://bh8kb6qsnoko2"]
 
 [ext_resource type="Shader" uid="uid://yy61jhufdvq6" path="res://objects/world/star_shader.gdshader" id="1_3dyli"]
 [ext_resource type="Script" uid="uid://c58npnxh4oitp" path="res://objects/world/star.gd" id="1_jdup5"]
@@ -12,8 +12,8 @@ shader_parameter/cross_intensity = 0.6
 shader_parameter/mid_power = 4.5
 shader_parameter/glow_factor = 0.5
 shader_parameter/intensity = 1.9
-shader_parameter/mid_near_anim_factor = 1.0
-shader_parameter/intensity_anim_factor = 5.0
+shader_parameter/mid_near_anim_factor = 0.1
+shader_parameter/intensity_anim_factor = 0.4
 shader_parameter/anim_speed_modifier = 10.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_jdup5"]
@@ -23,18 +23,15 @@ size = Vector2(0.3, 0.3)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jdup5"]
 render_priority = 0
 shader = ExtResource("1_3dyli")
-shader_parameter/star_color = Color(0.966365, 0, 0.177643, 1)
+shader_parameter/star_color = Color(0, 0.5, 1, 1)
 shader_parameter/cross_factor = 40.0
 shader_parameter/cross_intensity = 0.6
 shader_parameter/mid_power = 4.5
 shader_parameter/glow_factor = 0.5
 shader_parameter/intensity = 1.9
-shader_parameter/mid_near_anim_factor = 1.0
-shader_parameter/intensity_anim_factor = 5.0
+shader_parameter/mid_near_anim_factor = 0.1
+shader_parameter/intensity_anim_factor = 0.4
 shader_parameter/anim_speed_modifier = 10.0
-
-[sub_resource type="Environment" id="Environment_3dyli"]
-background_energy_multiplier = 0.0
 
 [node name="Star" type="Node3D"]
 script = ExtResource("1_jdup5")
@@ -44,44 +41,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.659199)
 mesh = SubResource("QuadMesh_jdup5")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("ShaderMaterial_jdup5")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.292494)
-mesh = SubResource("QuadMesh_jdup5")
-skeleton = NodePath("")
-
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.618912, 0, -0.292494)
-mesh = SubResource("QuadMesh_jdup5")
-skeleton = NodePath("")
-
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.618912, 0, 0.457767)
-mesh = SubResource("QuadMesh_jdup5")
-skeleton = NodePath("")
-
-[node name="MeshInstance3D5" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.55281, 0, 0.457767)
-mesh = SubResource("QuadMesh_jdup5")
-skeleton = NodePath("")
-
-[node name="MeshInstance3D6" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.55281, 0, -0.756668)
-mesh = SubResource("QuadMesh_jdup5")
-skeleton = NodePath("")
-
-[node name="MeshInstance3D7" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.275124, 0, -0.756668)
-mesh = SubResource("QuadMesh_jdup5")
-skeleton = NodePath("")
-
-[node name="MeshInstance3D11" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.928379, 0, 0.492019)
-mesh = SubResource("QuadMesh_jdup5")
-skeleton = NodePath("")
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_3dyli")
-
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.642748, 0.766078, 0, -0.766078, 0.642748, -0.0356629, 1.3096, 0.91659)
