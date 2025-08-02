@@ -4,8 +4,9 @@ extends Node
 # Do not place gameplay functionality here.
 
 signal level_end
-@export var enable_debug: bool = true
 
+@export var enable_debug: bool = true
+	
 func GetUIManager() -> UIManagerScript:
 	return (UIManager as UIManagerScript)
 

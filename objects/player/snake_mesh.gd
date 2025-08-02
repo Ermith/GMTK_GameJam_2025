@@ -5,14 +5,14 @@ class_name SnakeMesh
 @export var radius: float = 0.2
 @export var ring_interval: float = 0.2
 @export var ring_segments: int = 8
-@export var head_length: float = 0.2
 @export var tail_length: float = 1.0
 @export var curve_param: float = 0.8
 @export var cubic_interpolation: bool = true
-@export var bake_interval: float = INF
 @export var head_facing: Vector3 = Vector3(0, 0, 0)
 
 var curve: Curve3D
+
+const bake_interval: float = INF
 
 func _ready() -> void:
 	curve = Curve3D.new()
@@ -20,31 +20,14 @@ func _ready() -> void:
 	refresh()
 
 func debug_draw_curve() -> void:
-	var debug_mesh: ImmediateMesh = ImmediateMesh.new()
-	debug_mesh.surface_begin(Mesh.PRIMITIVE_LINE_STRIP)
 	var baked_points: PackedVector3Array = curve.get_baked_points()
-	for point: Vector3 in baked_points:
-		debug_mesh.surface_add_vertex(point)
-	debug_mesh.surface_end()
-	debug_mesh.surface_begin(Mesh.PRIMITIVE_TRIANGLES)
+	for i: int in range(baked_points.size() - 1):
+		DebugDraw3D.draw_line(baked_points[i], baked_points[i + 1], Color(0, 1, 0), 0.005)
+	
 	for i: int in range(points.size()):
-		# triangle perpendicular to the curve
-		var p1: Vector3 = points[i]
-		var direction: Vector3 = Vector3(0, 0, 0)
-		if i < points.size() - 1:
-			direction = (points[i + 1] - p1).normalized()
-		elif i > 0:
-			direction = (p1 - points[i - 1]).normalized()
-		var up_vector: Vector3 = Vector3(0, 1, 0).cross(direction).normalized()
-		var right_vector: Vector3 = direction.cross(up_vector).normalized()
-		debug_mesh.surface_add_vertex(p1 + right_vector * radius)
-		debug_mesh.surface_add_vertex(p1 - right_vector * radius)
-		debug_mesh.surface_add_vertex(p1 + up_vector * radius)
-	debug_mesh.surface_end()
-	var mat: StandardMaterial3D = StandardMaterial3D.new()
-	mat.cull_mode = StandardMaterial3D.CULL_DISABLED
-	material_override = mat
-	mesh = debug_mesh
+		var point: Vector3 = points[i]
+		var sphere_color: Color = Color(1, 0.5, 0)
+		DebugDraw3D.draw_sphere(point, 0.01, sphere_color, 0)
 
 func refresh() -> void:
 	refresh_curve()
@@ -56,7 +39,6 @@ func refresh_curve() -> void:
 		return
 	curve = Curve3D.new()
 	curve.set_bake_interval(bake_interval)
-	var last_point_direction: Vector3 = Vector3.ZERO
 	for i: int in range(points.size()):
 		var direction: Vector3 = Vector3.ZERO
 		var distance_to_nearest: float = radius
@@ -72,19 +54,10 @@ func refresh_curve() -> void:
 		direction = direction.normalized()
 		var out_vector: Vector3 = direction * curve_param * distance_to_nearest * 0.5
 		curve.add_point(points[i], -out_vector, out_vector)
-		last_point_direction = direction
-	if head_facing != Vector3.ZERO:
-		last_point_direction = head_facing.normalized()
-	var out_vector_last: Vector3 = last_point_direction * curve_param * radius * 0.5
-	curve.add_point(points[points.size() - 1] + last_point_direction * radius, -out_vector_last, out_vector_last)
 
 func radius_function(t: float) -> float:
 	var snake_length: float =  curve.get_baked_length()
-	var distance_from_head: float = snake_length * (1.0 - t)
 	var result: float = radius
-	if distance_from_head < head_length:
-		var p: float = 1.0 - distance_from_head / head_length
-		result *= sqrt(1 - p * p)
 	var distance_from_tail: float = snake_length * t
 	if distance_from_tail < tail_length:
 		var p: float = distance_from_tail / tail_length
@@ -101,16 +74,10 @@ func get_baked_points() -> BakedPoints:
 	result.offsets = []
 	var curve_length: float = curve.get_baked_length()
 	var offset: float = 0.0
-	while offset < curve_length - head_length:
+	while offset < curve_length:
 		result.points.append(curve.sample_baked(offset, cubic_interpolation))
 		result.offsets.append(offset)
 		offset += ring_interval
-	offset = curve_length - head_length
-	while offset < curve_length:
-		var distance_from_head_frac: float = (curve_length - offset) / head_length
-		result.points.append(curve.sample_baked(offset, cubic_interpolation))
-		result.offsets.append(offset)
-		offset += head_length * (0.05 + 0.2 * (distance_from_head_frac))
 	result.points.append(curve.sample_baked(curve_length, cubic_interpolation))
 	result.offsets.append(curve_length)
 	return result
@@ -133,14 +100,17 @@ func refresh_mesh() -> void:
 	surface_array[Mesh.ARRAY_INDEX] = indices
 
 	var baked_points: BakedPoints = get_baked_points()
+	if baked_points.points.size() < 2:
+		return
 	#var baked_up_vectors: PackedVector3Array = curve.get_baked_up_vectors()
 
 	var tail_vertex_index: int = 0
 	verts.append(baked_points.points[0])
 	normals.append((baked_points.points[0] - baked_points.points[1]).normalized())
 	uvs.append(Vector2(0, 0))
+	var head_center: Vector3 = baked_points.points[-1]
 	var head_vertex_index: int = 1
-	verts.append(baked_points.points[-1])
+	verts.append(head_center + head_facing.normalized() * radius_function(1.0))
 	normals.append((baked_points.points[-1] - baked_points.points[-2]).normalized())
 	uvs.append(Vector2(1, 0))
 
@@ -185,18 +155,41 @@ func refresh_mesh() -> void:
 				indices.append(base_vertex_index + i)
 				indices.append(previous_base_index + (i + 1) % ring_segments)
 
-			if index == baked_points.points.size() - 2:
+	var blargh_head: Vector3 = Vector3(0, 0, -1).cross(head_facing).normalized()
+	var up_vector_head: Vector3 = blargh_head.cross(head_facing).normalized()
+	var n_head_bits: int = ring_segments - 1
+	for head_bit: int in range(n_head_bits):
+		var head_angle: float = (1 + head_bit) / float(n_head_bits + 2) * PI / 2
+		var base_vertex_index: int = verts.size()
+		for i: int in range(ring_segments):
+			var angle: float = (i / float(ring_segments)) * TAU
+			var local_offset: Vector3 = Vector3(cos(angle) * cos(head_angle), sin(angle) * cos(head_angle), sin(head_angle)) * radius_function(1.0)
+			var offset: Vector3 = head_facing.cross(up_vector_head).normalized() * local_offset.x + up_vector_head * local_offset.y + head_facing * local_offset.z
+			
+			var vertex: Vector3 = head_center + offset
+			verts.append(vertex)
+
+			var normal: Vector3 = (vertex - head_center).normalized()
+			normals.append(normal)
+			
+			var u: float = 1.0
+			var v: float = float(i) / float(ring_segments)
+			uvs.append(Vector2(u, v))
+
+			if head_bit == n_head_bits - 1:
 				indices.append(head_vertex_index)
 				indices.append(base_vertex_index + i)
 				indices.append(base_vertex_index + (i + 1) % ring_segments)
+			var previous_base_index: int = base_vertex_index - ring_segments
+			indices.append(base_vertex_index + i)
+			indices.append(previous_base_index + i)
+			indices.append(previous_base_index + (i + 1) % ring_segments)
+
+			indices.append(base_vertex_index + (i + 1) % ring_segments)
+			indices.append(base_vertex_index + i)
+			indices.append(previous_base_index + (i + 1) % ring_segments)
 
 	array_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, surface_array)
-
-func tip() -> Vector3:
-	var baked_points: PackedVector3Array = curve.get_baked_points()
-	if baked_points.size() == 0:
-		return Vector3.ZERO
-	return baked_points[baked_points.size() - 1]
 
 
 class PointOnCurve:
@@ -217,3 +210,25 @@ func closest_point(reference: Vector3) -> PointOnCurve:
 	var next: Vector3 = curve.sample_baked(offset + 0.01, cubic_interpolation)
 	var direction: Vector3 = (next - prev).normalized()
 	return PointOnCurve.new(point, offset, direction)
+
+func split_off_suffix(offset: float, suffix_offset_shift: float = 0) -> PackedVector3Array:
+	var new_point_kept: Vector3 = curve.sample_baked(offset, cubic_interpolation)
+	var new_point_in_suffix: Vector3 = curve.sample_baked(offset + suffix_offset_shift, cubic_interpolation)
+	var last_index_kept: int = 0
+	var length_so_far: float = 0.0
+	for i: int in range(1, points.size()):
+		var point: Vector3 = points[i]
+		var prev_point: Vector3 = points[i - 1]
+		length_so_far += point.distance_to(prev_point)
+		if length_so_far >= offset:
+			last_index_kept = i - 1
+			break
+	
+	var new_points: PackedVector3Array = PackedVector3Array()
+	new_points.append(new_point_in_suffix)
+	for i: int in range(points.size() - 1, last_index_kept, -1):
+		new_points.append(points[i])
+		points.remove_at(i)
+
+	points.append(new_point_kept)
+	return new_points
