@@ -30,6 +30,6 @@ looped = true
 metadata/_custom_type_script = "uid://dg5jqs15gmbgn"
 
 [node name="Polygon" type="CSGPolygon3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.104957)
 material_override = SubResource("StandardMaterial3D_ej84n")
 depth = 0.1

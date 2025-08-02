@@ -4,18 +4,21 @@ class_name LoopEffect
 @onready var mesh: SnakeMesh = $SnakeMesh
 @onready var polygon: CSGPolygon3D = $Polygon
 
-var shrink_velocity: float = 0.5
+var shrink_velocity: float = 0.2
 var timer: float = 0.0
-var max_timer: float = 0.5
+var max_timer: float = 0.7
 var velocity_mult: float = 1.0
+var color: Color = Color(1, 1, 1, 1)
+var velocity_acceleration: float = 8.0
 
 func _ready() -> void:
 	mesh.mesh = mesh.mesh.duplicate()
 
-func init(points: PackedVector3Array) -> void:
+func init(points: PackedVector3Array, color_: Color) -> void:
 	mesh.points = points
 	if mesh.get_clockwiseness() == -1:
 		velocity_mult *= -1
+	self.color = color_
 
 func update_points() -> void:
 	var twodpoints: PackedVector2Array = PackedVector2Array()
@@ -49,13 +52,19 @@ func _process(delta: float) -> void:
 		new_points.append(point + in_vector * shrink_velocity * delta)
 
 	mesh.points = new_points
-	shrink_velocity += 10.0 * delta
+	shrink_velocity += velocity_acceleration * delta
 	timer += delta
 
 	var mat: StandardMaterial3D = mesh.material_override as StandardMaterial3D
+	mat.albedo_color = color
 	mat.albedo_color.a = main_alpha_fn(time_frac())
+	mat.emission = color
+	mat.emission.a = main_alpha_fn(time_frac())
 	var polygon_mat: StandardMaterial3D = polygon.material_override as StandardMaterial3D
+	polygon_mat.albedo_color = color
 	polygon_mat.albedo_color.a = main_alpha_fn(time_frac()) * polygon_alpha_fn(time_frac())
+	polygon_mat.emission = color
+	polygon_mat.emission.a = main_alpha_fn(time_frac()) * polygon_alpha_fn(time_frac())
 
 	if timer > max_timer:
 		queue_free()

@@ -11,6 +11,12 @@ class_name SnakeMesh
 @export var head_facing: Vector3 = Vector3(0, 0, 0)
 @export var looped: bool = false
 
+@export var coloring_point: Vector3 = Vector3.ZERO
+@export var coloring_radius: float = 0.0
+@export var coloring_direction: Vector3 = Vector3(1, 0, 0)
+@export var head_distance_not_colored: float = 1.0
+@export var default_color: Color = Color(1, 1, 1, 1)
+
 var curve: Curve3D
 var clockwiseness: int = 0 # 1 for clockwise, -1 for counter-clockwise, 0 for unknown
 
@@ -102,6 +108,26 @@ func get_baked_points() -> BakedPoints:
 	result.offsets.append(curve_length)
 	return result
 
+func color_at_pos(t: float) -> Color:
+	if coloring_radius <= 0:
+		return default_color
+	var length: float = curve.get_baked_length()
+	var point: Vector3 = curve.sample_baked(t * length, cubic_interpolation)
+	var distance_to_point: float = point.distance_to(coloring_point)
+	if distance_to_point > coloring_radius:
+		return default_color
+	var distance_from_head: float = length - (t * length)
+	var distance_from_head_frac: float = distance_from_head / head_distance_not_colored
+	var color_intensity: float = smoothstep(0, 1, 1.0 - (distance_to_point / coloring_radius)) * smoothstep(0, 1, distance_from_head_frac)
+	var p_before: Vector3 = curve.sample_baked((t - 0.01) * length, cubic_interpolation)
+	var p_after: Vector3 = curve.sample_baked((t + 0.01) * length, cubic_interpolation)
+	var direction: Vector3 = (p_after - p_before).normalized()
+	var angle: float = direction.angle_to(coloring_direction)
+	var goodness: float = Player.collision_goodness(angle)
+	var color: Color = Player.goodness_to_color(goodness)
+	color = lerp(default_color, color, color_intensity)
+	return color
+
 func refresh_mesh() -> void:
 	var array_mesh: ArrayMesh = mesh as ArrayMesh
 	array_mesh.clear_surfaces()
@@ -114,10 +140,12 @@ func refresh_mesh() -> void:
 	var normals: PackedVector3Array = PackedVector3Array()
 	var uvs: PackedVector2Array = PackedVector2Array()
 	var indices: PackedInt32Array = PackedInt32Array()
+	var colors: PackedColorArray = PackedColorArray()
 	surface_array[Mesh.ARRAY_VERTEX] = verts
 	surface_array[Mesh.ARRAY_NORMAL] = normals
 	surface_array[Mesh.ARRAY_TEX_UV] = uvs
 	surface_array[Mesh.ARRAY_INDEX] = indices
+	surface_array[Mesh.ARRAY_COLOR] = colors
 
 	var baked_points: BakedPoints = get_baked_points()
 	if baked_points.points.size() < 2:
@@ -132,10 +160,13 @@ func refresh_mesh() -> void:
 		verts.append(baked_points.points[0])
 		normals.append((baked_points.points[0] - baked_points.points[1]).normalized())
 		uvs.append(Vector2(0, 0))
+		colors.append(color_at_pos(0.0))
+
 		head_vertex_index = 1
 		verts.append(head_center + head_facing.normalized() * radius_function(1.0))
 		normals.append((baked_points.points[-1] - baked_points.points[-2]).normalized())
 		uvs.append(Vector2(1, 0))
+		colors.append(color_at_pos(1.0))
 
 	for index: int in range(1, baked_points.points.size() - 1):
 		var current_point: Vector3 = baked_points.points[index]
@@ -163,6 +194,8 @@ func refresh_mesh() -> void:
 			var u: float = t
 			var v: float = float(i) / float(ring_segments)
 			uvs.append(Vector2(u, v))
+
+			colors.append(color_at_pos(t))
 			
 			if index == 1:
 				if looped:
@@ -209,6 +242,8 @@ func refresh_mesh() -> void:
 				var u: float = 1.0
 				var v: float = float(i) / float(ring_segments)
 				uvs.append(Vector2(u, v))
+
+				colors.append(color_at_pos(1.0))
 
 				if head_bit == n_head_bits - 1:
 					indices.append(head_vertex_index)
