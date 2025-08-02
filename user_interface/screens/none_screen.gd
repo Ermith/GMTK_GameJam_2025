@@ -1,0 +1,2 @@
+extends GameScreenBase
+class_name NoneScreen

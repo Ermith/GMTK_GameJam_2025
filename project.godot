@@ -15,6 +15,12 @@ run/main_scene="uid://l45q1a43exjn"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Global="*res://core/global.gd"
+GameInstance="*res://core/game_instance.gd"
+UIManager="*res://user_interface/ui_manager.tscn"
+
 [debug]
 
 gdscript/warnings/untyped_declaration=2

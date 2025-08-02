@@ -1,0 +1,16 @@
+[gd_scene load_steps=6 format=3 uid="uid://bl0jfwimvptpm"]
+
+[ext_resource type="Script" uid="uid://btr1dv3pr0f" path="res://user_interface/ui_manager.gd" id="1_eehsa"]
+[ext_resource type="PackedScene" uid="uid://c3ilgtftnm4m" path="res://user_interface/screens/main_menu.tscn" id="2_nn2dq"]
+[ext_resource type="PackedScene" uid="uid://ni64b3xmsyt5" path="res://user_interface/screens/game_hud.tscn" id="3_tqfl6"]
+[ext_resource type="PackedScene" uid="uid://121inq6kk5ty" path="res://user_interface/screens/pause_screen.tscn" id="4_tqfl6"]
+[ext_resource type="PackedScene" uid="uid://drb7i22i6ki4j" path="res://user_interface/screens/none_screen.tscn" id="5_ob1xi"]
+
+[node name="UiManager" type="CanvasLayer"]
+script = ExtResource("1_eehsa")
+Screens = Dictionary[int, PackedScene]({
+0: ExtResource("5_ob1xi"),
+1: ExtResource("2_nn2dq"),
+2: ExtResource("4_tqfl6"),
+5: ExtResource("3_tqfl6")
+})

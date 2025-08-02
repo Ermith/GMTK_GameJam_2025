@@ -1,0 +1,2 @@
+extends PausableScreenBase
+class_name GameOverScreen
