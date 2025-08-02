@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://bl0jfwimvptpm"]
+[gd_scene load_steps=8 format=3 uid="uid://bl0jfwimvptpm"]
 
 [ext_resource type="Script" uid="uid://btr1dv3pr0f" path="res://user_interface/ui_manager.gd" id="1_eehsa"]
 [ext_resource type="PackedScene" uid="uid://c3ilgtftnm4m" path="res://user_interface/screens/main_menu.tscn" id="2_nn2dq"]
 [ext_resource type="PackedScene" uid="uid://ni64b3xmsyt5" path="res://user_interface/screens/game_hud.tscn" id="3_tqfl6"]
 [ext_resource type="PackedScene" uid="uid://121inq6kk5ty" path="res://user_interface/screens/pause_screen.tscn" id="4_tqfl6"]
 [ext_resource type="PackedScene" uid="uid://drb7i22i6ki4j" path="res://user_interface/screens/none_screen.tscn" id="5_ob1xi"]
+[ext_resource type="PackedScene" uid="uid://v5ftttghgrbi" path="res://user_interface/screens/victory_screen.tscn" id="6_gdc4h"]
+[ext_resource type="PackedScene" uid="uid://d1xnju35xmcn1" path="res://user_interface/screens/defeat_screen.tscn" id="7_osu13"]
 
 [node name="UiManager" type="CanvasLayer"]
 script = ExtResource("1_eehsa")
@@ -12,5 +14,7 @@ Screens = Dictionary[int, PackedScene]({
 0: ExtResource("5_ob1xi"),
 1: ExtResource("2_nn2dq"),
 2: ExtResource("4_tqfl6"),
-5: ExtResource("3_tqfl6")
+5: ExtResource("3_tqfl6"),
+6: ExtResource("6_gdc4h"),
+7: ExtResource("7_osu13")
 })
