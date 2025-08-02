@@ -33,7 +33,7 @@ func main_alpha_fn(t: float) -> float:
 	return 1.0 - smoothstep(0, 1, t)
 
 func polygon_alpha_fn(t: float) -> float:
-	var fgdjiojfdgso: float = clamp(t * 3.0, 0.0, 1.0)
+	var fgdjiojfdgso: float = clamp(t * 5.0, 0.0, 1.0)
 	return smoothstep(0.0, 1.0, fgdjiojfdgso) * 0.7
 
 func _process(delta: float) -> void:
