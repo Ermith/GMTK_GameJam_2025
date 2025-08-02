@@ -1,22 +1,9 @@
 extends Node3D
-const STAR: PackedScene = preload("res://objects/world/star.tscn")
 
-class Sector:
-	var random_pos: Vector2
-	var ring: int
-	var min_angle: float
-	var max_angle: float
-	var min_radius: float
-	var max_radius: float
-	
-	func get_random_pos() -> Vector2:
-		var angle_width: float = max_angle - min_angle
-		var random_angle: float = min_angle + randf() * angle_width
-		var dir: Vector2 = Vector2.UP.rotated(deg_to_rad(random_angle))
-		
-		var height: float = max_radius - min_radius
-		var random_height: float = min_radius + randf() * height
-		return dir * random_height
+const STAR: PackedScene = preload("res://objects/world/star.tscn")
+const HYPER_LANE: PackedScene = preload("res://objects/world/hyper_lane.tscn")
+
+var stars: Array[Star]
 
 func disc_area(radius: float) -> float: return radius * radius * PI
 
@@ -44,17 +31,38 @@ func calculate_sectors(radius: float, radius_min: float, rings: int, first_ring_
 			sector.max_angle = sector_angle_offset + sector_width / 2.0
 			sector.min_radius = radius_min + ring_height * ring_index
 			sector.max_radius = radius_min + ring_height * (ring_index + 1)
+			sector.ring = ring_index
 			out_sectors.append(sector)
 		
 	return out_sectors
 
 func _ready() -> void:
-	var sectors: Array[Sector] = calculate_sectors(2.0, 0.5, 5, 30)
+	var sectors: Array[Sector] = calculate_sectors(2.0, 0.5, 5, 15)
 	for i: int in range(1):
 		for sector: Sector in sectors:
 			var pos: Vector2 = sector.get_random_pos()
 			var star: Star = STAR.instantiate()
 			add_child(star)
+			stars.append(star)
 			star.global_position = Vector3(pos.x, pos.y, 0.0)
 			#star.set_color(Color.from_hsv(randf(), 1.0, 1.0))
-			star.set_color(Color.SKY_BLUE)
+			star.set_color(Color.DEEP_SKY_BLUE)
+			star.sector = sector
+	
+	for i: int in range(stars.size()):
+		for j: int in range(stars.size()):
+			
+			if i == j:
+				continue
+			
+			if not stars[i].sector.can_be_neighbors(stars[j].sector):
+				continue
+
+			if stars[i] in stars[j].neightbors:
+				continue
+				
+			stars[i].neightbors.append(stars[j])
+			stars[j].neightbors.append(stars[i])
+			var hyper_lane: HyperLane = HYPER_LANE.instantiate()
+			add_child(hyper_lane)
+			hyper_lane.set_lane(stars[i].global_position, stars[j].global_position)
