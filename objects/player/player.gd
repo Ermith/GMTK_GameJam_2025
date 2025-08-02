@@ -3,17 +3,16 @@ class_name Player
 
 signal ran_out_of_length
 
-@export var base_speed: float = 1.5
+@export var game_stats: GameStats = preload("res://resources/game_stats.tres")
+
 @export var base_turning_speed: float = PI / 2
 @export var facing_vector: Vector3 = Vector3(1, 0, 0)
 @export var turning_axis: Vector3 = Vector3(0, 0, 1)
 @export var point_adding_interval: float = 0.2
-@export var initial_length: float = 40.0
 @export var collision_radius: float = 0.1
 ## Fraction of the length that is recovered on collision at the minimum (perpendicular collision)
 @export var min_recovery_on_loop: float = 0.5
 
-var remaining_length: float = initial_length
 var cur_turning_speed: float = base_turning_speed
 var head_position: Vector3 = Vector3(0, 0, 0)
 var distance_travelled_since_last_point: float = 0.0
@@ -30,13 +29,12 @@ func _ready() -> void:
 func reset_snake() -> void:
 	snake_mesh.points.clear()
 	snake_mesh.points.append(head_position)
-	current_length = 0.0
-	remaining_length = initial_length
+	game_stats.reset()
 	distance_travelled_since_last_point = 0.0
 	stored_backup_curve_point = Vector3.ZERO
 
 func get_speed() -> float:
-	return base_speed
+	return game_stats.base_speed
 
 func get_turning_speed() -> float:
 	return cur_turning_speed
@@ -69,7 +67,7 @@ func collision_scan() -> void:
 		Global.LogInfo("Collision detected with point: " + str(nearest_point.point) + ", angle: " + str(collision_angle) + ", damage fraction: " + str(raw_damage_fract) + ", length split off: " + str(length_split_off))
 		var recovered_length: float = length_split_off * recovery_fract
 		Global.LogInfo("Recovered length: " + str(recovered_length))
-		remaining_length += recovered_length
+		game_stats.remaining_length += recovered_length
 		collision_cooldown = max_colision_cooldown
 		head_position = nearest_point.point
 
@@ -89,9 +87,9 @@ func _physics_process(delta: float) -> void:
 		if distance_travelled_since_last_point > point_adding_interval * 0.7 and stored_backup_curve_point == Vector3.ZERO:
 			stored_backup_curve_point = head_position
 	snake_mesh.head_facing = facing_vector
-	current_length += moved_length
-	remaining_length = max(0, remaining_length - moved_length)
-	if remaining_length <= 0:
+	game_stats.current_length += moved_length
+	game_stats.remaining_length = max(0, game_stats.remaining_length - moved_length)
+	if game_stats.remaining_length <= 0:
 		death()
 		ran_out_of_length.emit()
 	# TODO: optimize
@@ -99,4 +97,5 @@ func _physics_process(delta: float) -> void:
 
 func death() -> void:
 	Global.LogInfo("Player has died")
+	#GameInstance.PlayerDefeated()
 	reset_snake()
