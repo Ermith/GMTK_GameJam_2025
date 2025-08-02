@@ -1,7 +1,7 @@
 extends Node3D
 
-const STAR: PackedScene = preload("res://objects/world/star.tscn")
-const HYPER_LANE: PackedScene = preload("res://objects/world/hyper_lane.tscn")
+@export var STAR: PackedScene
+@export var HYPER_LANE: PackedScene
 
 var stars: Array[Star]
 
@@ -37,7 +37,7 @@ func calculate_sectors(radius: float, radius_min: float, rings: int, first_ring_
 	return out_sectors
 
 func _ready() -> void:
-	var sectors: Array[Sector] = calculate_sectors(2.0, 0.5, 5, 15)
+	var sectors: Array[Sector] = calculate_sectors(7.0, 1.3, 8, 15)
 	for i: int in range(1):
 		for sector: Sector in sectors:
 			var pos: Vector2 = sector.get_random_pos()

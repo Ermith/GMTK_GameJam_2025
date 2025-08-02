@@ -8,6 +8,7 @@ size = Vector2(0.3, 0.3)
 
 [node name="Star" type="Node3D"]
 script = ExtResource("1_8ky6w")
+STAR_MATERIAL = ExtResource("2_eg676")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("QuadMesh_jdup5")

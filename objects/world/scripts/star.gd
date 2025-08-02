@@ -3,7 +3,7 @@ class_name Star
 
 @onready var mesh_instance_3d: MeshInstance3D = $MeshInstance3D
 var shader_material: ShaderMaterial
-const STAR_MATERIAL: ShaderMaterial = preload("res://objects/world/star_material.tres")
+@export var STAR_MATERIAL: ShaderMaterial
 
 var neightbors: Array[Star]
 var sector: Sector

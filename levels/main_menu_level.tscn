@@ -1,25 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://l45q1a43exjn"]
+[gd_scene load_steps=2 format=3 uid="uid://l45q1a43exjn"]
 
 [ext_resource type="Script" uid="uid://372750u8m601" path="res://levels/level_base.gd" id="1_a0bpi"]
-[ext_resource type="Material" uid="uid://dvaphy8gqqneb" path="res://objects/world/shaders/star_material.tres" id="1_g3ujo"]
-
-[sub_resource type="QuadMesh" id="QuadMesh_a0bpi"]
-material = ExtResource("1_g3ujo")
-
-[sub_resource type="MeshTexture" id="MeshTexture_u84ys"]
-mesh = SubResource("QuadMesh_a0bpi")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ftkqg"]
-emission_enabled = true
-emission_texture = SubResource("MeshTexture_u84ys")
-billboard_mode = 1
-
-[sub_resource type="QuadMesh" id="QuadMesh_1bgdx"]
-material = SubResource("StandardMaterial3D_ftkqg")
 
 [node name="MainMenuScene" type="Node3D"]
 script = ExtResource("1_a0bpi")
 PreferredUI = 1
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("QuadMesh_1bgdx")
