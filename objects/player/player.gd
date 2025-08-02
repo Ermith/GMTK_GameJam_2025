@@ -13,6 +13,8 @@ signal ran_out_of_length
 ## Fraction of the length that is recovered on collision at the minimum (perpendicular collision)
 @export var min_recovery_on_loop: float = 0.5
 
+@export var loop_effect_scene: PackedScene = preload("res://objects/player/loop_effect.tscn")
+
 var cur_turning_speed: float = base_turning_speed
 var head_position: Vector3 = Vector3(0, 0, 0)
 var distance_travelled_since_last_point: float = 0.0
@@ -50,12 +52,14 @@ func collision_scan() -> void:
 		collision_cooldown -= get_process_delta_time()
 		return
 	var scan_point: Vector3 = head_position + facing_vector * collision_radius
+	if snake_mesh.points.size() < 2:
+		return
 	var nearest_point: SnakeMesh.PointOnCurve = snake_mesh.closest_point(scan_point)
 	if head_position.distance_to(nearest_point.point) > collision_radius / 2:
 		var collision_angle: float = facing_vector.angle_to(nearest_point.direction)
 		var raw_damage_fract: float = sin(collision_angle) ** 2 #1 - abs(cos(collision_angle))
 		var recovery_fract: float = clamp((1.0 - (raw_damage_fract - 0.1) / 0.9) * (1 - min_recovery_on_loop) + min_recovery_on_loop, 0.0, 1.0)
-		DebugDraw3D.draw_sphere(nearest_point.point, snake_mesh.radius + 0.1, Color(1, 0, 0), 0)
+		# DebugDraw3D.draw_sphere(nearest_point.point, snake_mesh.radius + 0.1, Color(1, 0, 0), 0)
 		var split_off_points: PackedVector3Array = snake_mesh.split_off_suffix(nearest_point.offset)
 		distance_travelled_since_last_point = 0.0
 		stored_backup_curve_point = Vector3.ZERO
@@ -70,7 +74,12 @@ func collision_scan() -> void:
 		collision_cooldown = max_colision_cooldown
 		head_position = nearest_point.point
 		snake_mesh.refresh_curve()
-	
+
+		if length_split_off > 0.5:
+			var loop_effect: LoopEffect = loop_effect_scene.instantiate()
+			get_parent().add_child(loop_effect)
+			loop_effect.init(split_off_points)
+			loop_effect.update_points()
 
 func _physics_process(delta: float) -> void:
 	var moved_length: float = get_speed() * delta

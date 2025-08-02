@@ -5,6 +5,9 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rcpxh"]
 albedo_color = Color(0.740571, 0.284937, 0.715153, 1)
+emission_enabled = true
+emission = Color(1, 0, 1, 1)
+emission_energy_multiplier = 0.1
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_rcpxh"]
 

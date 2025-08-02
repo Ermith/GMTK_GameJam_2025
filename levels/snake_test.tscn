@@ -1,14 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://ct8p1l2duwx6b"]
+[gd_scene load_steps=5 format=3 uid="uid://ct8p1l2duwx6b"]
 
 [ext_resource type="PackedScene" uid="uid://k4gtnyctrda" path="res://objects/player/player_snake.tscn" id="1_4ob46"]
 [ext_resource type="Script" uid="uid://372750u8m601" path="res://levels/level_base.gd" id="1_p5xoe"]
 [ext_resource type="Script" uid="uid://cedk2hrr3u3k5" path="res://objects/debug/debug_thingie.gd" id="2_ve675"]
-[ext_resource type="Script" uid="uid://dg5jqs15gmbgn" path="res://objects/player/snake_mesh.gd" id="3_8q8xl"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p5xoe"]
-albedo_color = Color(0.740571, 0.284937, 0.715153, 1)
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_vnlp2"]
 
 [sub_resource type="Environment" id="Environment_8q8xl"]
 background_mode = 1
@@ -32,14 +26,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.64993, 1.78033, 0.691907)
 
 [node name="DebugGuy" type="Node" parent="."]
 script = ExtResource("2_ve675")
-
-[node name="SnakeMesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.94775, 0, 0)
-material_override = SubResource("StandardMaterial3D_p5xoe")
-mesh = SubResource("ArrayMesh_vnlp2")
-script = ExtResource("3_8q8xl")
-points = PackedVector3Array(0, 0, 0, 1, 0, 0, 2, 1, 0, 3, 1, 0, 3, 1, 1, 2, 2, 0)
-metadata/_custom_type_script = "uid://dg5jqs15gmbgn"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_8q8xl")

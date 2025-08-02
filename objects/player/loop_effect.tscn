@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://buqm0x1ll7pxp"]
+
+[ext_resource type="Script" uid="uid://dg5jqs15gmbgn" path="res://objects/player/snake_mesh.gd" id="1_36bq3"]
+[ext_resource type="Script" uid="uid://lxd6nj6wlnc3" path="res://objects/player/loop_effect.gd" id="1_ej84n"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_36bq3"]
+transparency = 1
+albedo_color = Color(1, 0.239216, 0.231373, 0.67451)
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+emission_energy_multiplier = 0.1
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ej84n"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ej84n"]
+transparency = 1
+albedo_color = Color(1, 0.247059, 0.215686, 0.529412)
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+emission_energy_multiplier = 0.1
+
+[node name="LoopEffect" type="Node3D"]
+script = ExtResource("1_ej84n")
+
+[node name="SnakeMesh" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_36bq3")
+mesh = SubResource("ArrayMesh_ej84n")
+script = ExtResource("1_36bq3")
+looped = true
+metadata/_custom_type_script = "uid://dg5jqs15gmbgn"
+
+[node name="Polygon" type="CSGPolygon3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+material_override = SubResource("StandardMaterial3D_ej84n")
+depth = 0.5
