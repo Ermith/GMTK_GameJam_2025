@@ -1,0 +1,10 @@
+[gd_scene load_steps=4 format=3 uid="uid://c7l2mq1d2hma"]
+
+[ext_resource type="Script" uid="uid://p6uxeljflq7y" path="res://objects/world/scripts/galaxy.gd" id="1_pqysn"]
+[ext_resource type="PackedScene" uid="uid://bh8kb6qsnoko2" path="res://objects/world/scenes/star.tscn" id="2_nqrwp"]
+[ext_resource type="PackedScene" uid="uid://cy4gc37togb35" path="res://objects/world/scenes/hyper_lane.tscn" id="3_tq5wd"]
+
+[node name="Galaxy" type="Node3D"]
+script = ExtResource("1_pqysn")
+STAR = ExtResource("2_nqrwp")
+HYPER_LANE = ExtResource("3_tq5wd")

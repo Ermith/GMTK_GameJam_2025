@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c7l2mq1d2hma"]
+
+[ext_resource type="Script" uid="uid://p6uxeljflq7y" path="res://objects/world/scripts/galaxy.gd" id="1_pqysn"]
+
+[node name="Galaxy" type="Node3D"]
+script = ExtResource("1_pqysn")

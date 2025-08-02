@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://bh8kb6qsnoko2"]
+
+[ext_resource type="Script" uid="uid://c58npnxh4oitp" path="res://objects/world/scripts/star.gd" id="1_8ky6w"]
+[ext_resource type="Material" uid="uid://dvaphy8gqqneb" path="res://objects/world/shaders/star_material.tres" id="2_eg676"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_jdup5"]
+size = Vector2(0.3, 0.3)
+
+[node name="Star" type="Node3D"]
+script = ExtResource("1_8ky6w")
+STAR_MATERIAL = ExtResource("2_eg676")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("QuadMesh_jdup5")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("2_eg676")

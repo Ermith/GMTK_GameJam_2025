@@ -1,12 +1,15 @@
 extends Node3D
 class_name Star
+
 @onready var mesh_instance_3d: MeshInstance3D = $MeshInstance3D
 var shader_material: ShaderMaterial
+@export var STAR_MATERIAL: ShaderMaterial
 
 var neightbors: Array[Star]
+var sector: Sector
 
 func _ready() -> void:
-	mesh_instance_3d.material_override = mesh_instance_3d.mesh.surface_get_material(0).duplicate(false)
+	mesh_instance_3d.material_override = STAR_MATERIAL.duplicate(false)
 	shader_material = mesh_instance_3d.material_override as ShaderMaterial
 	
 	var color: Color

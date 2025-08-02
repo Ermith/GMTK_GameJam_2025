@@ -1,7 +1,24 @@
-[gd_scene load_steps=2 format=3 uid="uid://d60lah0lbjr5"]
+[gd_scene load_steps=5 format=3 uid="uid://d60lah0lbjr5"]
 
 [ext_resource type="Script" uid="uid://372750u8m601" path="res://levels/level_base.gd" id="1_qc6i3"]
+[ext_resource type="PackedScene" uid="uid://c7l2mq1d2hma" path="res://objects/world/scenes/galaxy.tscn" id="2_sklrn"]
+[ext_resource type="PackedScene" uid="uid://k4gtnyctrda" path="res://objects/player/player_snake.tscn" id="3_d65c1"]
+
+[sub_resource type="Environment" id="Environment_d65c1"]
+background_mode = 1
+background_color = Color(0, 0, 0.0784314, 1)
+sky_custom_fov = 20.0
 
 [node name="GameScene" type="Node3D"]
 script = ExtResource("1_qc6i3")
 PreferredUI = 5
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_d65c1")
+
+[node name="Galaxy" parent="." instance=ExtResource("2_sklrn")]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.793236, -0.608914, 0, 0.608914, 0.793236, 0, -3.03703, 2.53234)
+
+[node name="PlayerSnake" parent="." instance=ExtResource("3_d65c1")]
