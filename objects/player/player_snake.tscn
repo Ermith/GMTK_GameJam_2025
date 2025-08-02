@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://k4gtnyctrda"]
+[gd_scene load_steps=7 format=3 uid="uid://k4gtnyctrda"]
 
 [ext_resource type="Script" uid="uid://c3s4how4gprfg" path="res://objects/player/player.gd" id="1_xvoyx"]
 [ext_resource type="Shader" uid="uid://cexqci24owqp" path="res://objects/player/snake_shader.gdshader" id="2_7cxnn"]
 [ext_resource type="Script" uid="uid://dg5jqs15gmbgn" path="res://objects/player/snake_mesh.gd" id="2_rcpxh"]
+[ext_resource type="Script" uid="uid://b6avo3fruva83" path="res://objects/player/camera_zoom.gd" id="4_ma2x5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ma2x5"]
 render_priority = 0
@@ -19,6 +20,12 @@ material_override = SubResource("ShaderMaterial_ma2x5")
 mesh = SubResource("ArrayMesh_rcpxh")
 script = ExtResource("2_rcpxh")
 points = PackedVector3Array()
+radius = 0.05
+ring_interval = 0.1
 coloring_radius = 1.5
 head_distance_not_colored = 3.0
 metadata/_custom_type_script = "uid://dg5jqs15gmbgn"
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7.52644)
+script = ExtResource("4_ma2x5")

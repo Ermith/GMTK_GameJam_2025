@@ -18,7 +18,4 @@ environment = SubResource("Environment_d65c1")
 
 [node name="Galaxy" parent="." instance=ExtResource("2_sklrn")]
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.793236, -0.608914, 0, 0.608914, 0.793236, 0, -3.03703, 2.53234)
-
 [node name="PlayerSnake" parent="." instance=ExtResource("3_d65c1")]

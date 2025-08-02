@@ -25,6 +25,7 @@ var max_colision_cooldown: float = 0.1
 var average_turning_speed: float = base_turning_speed
 
 @onready var snake_mesh: SnakeMesh = $SnakeMesh
+@onready var camera: CameraZoom = $Camera3D
 
 func _ready() -> void:
 	reset_snake()
@@ -127,6 +128,11 @@ func _physics_process(delta: float) -> void:
 	# TODO: optimize
 	snake_mesh.refresh_mesh()
 	game_stats.current_length = snake_mesh.curve.get_baked_length()
+
+func _process(_delta: float) -> void:
+	if snake_mesh.points.size() < 2:
+		return
+	camera.set_target_position(head_position)
 
 func death() -> void:
 	Global.LogInfo("Player has died")
