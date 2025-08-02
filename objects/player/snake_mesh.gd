@@ -100,6 +100,8 @@ func refresh_mesh() -> void:
 	surface_array[Mesh.ARRAY_INDEX] = indices
 
 	var baked_points: BakedPoints = get_baked_points()
+	if baked_points.points.size() < 2:
+		return
 	#var baked_up_vectors: PackedVector3Array = curve.get_baked_up_vectors()
 
 	var tail_vertex_index: int = 0

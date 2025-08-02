@@ -17,7 +17,6 @@ var cur_turning_speed: float = base_turning_speed
 var head_position: Vector3 = Vector3(0, 0, 0)
 var distance_travelled_since_last_point: float = 0.0
 var stored_backup_curve_point: Vector3 = Vector3.ZERO
-var current_length: float = 0.0
 var collision_cooldown: float = 0.0
 var max_colision_cooldown: float = 0.1
 
@@ -70,6 +69,8 @@ func collision_scan() -> void:
 		game_stats.remaining_length += recovered_length
 		collision_cooldown = max_colision_cooldown
 		head_position = nearest_point.point
+		snake_mesh.refresh_curve()
+	
 
 func _physics_process(delta: float) -> void:
 	var moved_length: float = get_speed() * delta
@@ -87,13 +88,16 @@ func _physics_process(delta: float) -> void:
 		if distance_travelled_since_last_point > point_adding_interval * 0.7 and stored_backup_curve_point == Vector3.ZERO:
 			stored_backup_curve_point = head_position
 	snake_mesh.head_facing = facing_vector
-	game_stats.current_length += moved_length
-	game_stats.remaining_length = max(0, game_stats.remaining_length - moved_length)
+	var orig_cur_length: float = snake_mesh.curve.get_baked_length()
+	snake_mesh.refresh_curve()
+	var length_moved_according_to_curve: float = snake_mesh.curve.get_baked_length() - orig_cur_length
+	game_stats.remaining_length = max(0, game_stats.remaining_length - length_moved_according_to_curve)
 	if game_stats.remaining_length <= 0:
 		death()
 		ran_out_of_length.emit()
 	# TODO: optimize
-	snake_mesh.refresh()
+	snake_mesh.refresh_mesh()
+	game_stats.current_length = snake_mesh.curve.get_baked_length()
 
 func death() -> void:
 	Global.LogInfo("Player has died")
