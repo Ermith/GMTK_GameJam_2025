@@ -8,10 +8,11 @@ class_name SnakeMesh
 @export var tail_length: float = 1.0
 @export var curve_param: float = 0.8
 @export var cubic_interpolation: bool = true
-@export var bake_interval: float = INF
 @export var head_facing: Vector3 = Vector3(0, 0, 0)
 
 var curve: Curve3D
+
+const bake_interval: float = INF
 
 func _ready() -> void:
 	curve = Curve3D.new()
@@ -19,31 +20,14 @@ func _ready() -> void:
 	refresh()
 
 func debug_draw_curve() -> void:
-	var debug_mesh: ImmediateMesh = ImmediateMesh.new()
-	debug_mesh.surface_begin(Mesh.PRIMITIVE_LINE_STRIP)
 	var baked_points: PackedVector3Array = curve.get_baked_points()
-	for point: Vector3 in baked_points:
-		debug_mesh.surface_add_vertex(point)
-	debug_mesh.surface_end()
-	debug_mesh.surface_begin(Mesh.PRIMITIVE_TRIANGLES)
+	for i: int in range(baked_points.size() - 1):
+		DebugDraw3D.draw_line(baked_points[i], baked_points[i + 1], Color(0, 1, 0), 0.005)
+	
 	for i: int in range(points.size()):
-		# triangle perpendicular to the curve
-		var p1: Vector3 = points[i]
-		var direction: Vector3 = Vector3(0, 0, 0)
-		if i < points.size() - 1:
-			direction = (points[i + 1] - p1).normalized()
-		elif i > 0:
-			direction = (p1 - points[i - 1]).normalized()
-		var up_vector: Vector3 = Vector3(0, 1, 0).cross(direction).normalized()
-		var right_vector: Vector3 = direction.cross(up_vector).normalized()
-		debug_mesh.surface_add_vertex(p1 + right_vector * radius)
-		debug_mesh.surface_add_vertex(p1 - right_vector * radius)
-		debug_mesh.surface_add_vertex(p1 + up_vector * radius)
-	debug_mesh.surface_end()
-	var mat: StandardMaterial3D = StandardMaterial3D.new()
-	mat.cull_mode = StandardMaterial3D.CULL_DISABLED
-	material_override = mat
-	mesh = debug_mesh
+		var point: Vector3 = points[i]
+		var sphere_color: Color = Color(1, 0.5, 0)
+		DebugDraw3D.draw_sphere(point, 0.01, sphere_color, 0)
 
 func refresh() -> void:
 	refresh_curve()
@@ -224,3 +208,25 @@ func closest_point(reference: Vector3) -> PointOnCurve:
 	var next: Vector3 = curve.sample_baked(offset + 0.01, cubic_interpolation)
 	var direction: Vector3 = (next - prev).normalized()
 	return PointOnCurve.new(point, offset, direction)
+
+func split_off_suffix(offset: float, suffix_offset_shift: float = 0) -> PackedVector3Array:
+	var new_point_kept: Vector3 = curve.sample_baked(offset, cubic_interpolation)
+	var new_point_in_suffix: Vector3 = curve.sample_baked(offset + suffix_offset_shift, cubic_interpolation)
+	var last_index_kept: int = 0
+	var length_so_far: float = 0.0
+	for i: int in range(1, points.size()):
+		var point: Vector3 = points[i]
+		var prev_point: Vector3 = points[i - 1]
+		length_so_far += point.distance_to(prev_point)
+		if length_so_far >= offset:
+			last_index_kept = i - 1
+			break
+	
+	var new_points: PackedVector3Array = PackedVector3Array()
+	new_points.append(new_point_in_suffix)
+	for i: int in range(points.size() - 1, last_index_kept, -1):
+		new_points.append(points[i])
+		points.remove_at(i)
+
+	points.append(new_point_kept)
+	return new_points
