@@ -1,6 +1,6 @@
 [gd_resource type="QuadMesh" load_steps=3 format=3 uid="uid://x81ki7jepa0g"]
 
-[ext_resource type="Shader" uid="uid://cdcdlvw2k5u2h" path="res://objects/world/shaders/galaxy_background.gdshader" id="1_vghph"]
+[ext_resource type="Shader" path="res://objects/world/shaders/galaxy_background.gdshader" id="1_vghph"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vghph"]
 render_priority = 0

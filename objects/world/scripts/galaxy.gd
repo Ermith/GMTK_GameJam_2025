@@ -115,7 +115,7 @@ func _ready() -> void:
 
 func civilization_died() -> void:
 	current_civilization_count -= 1
-	if current_civilization_count <= 0:
+	if current_civilization_count <= 0 and not player.autopilot:
 		GameInstance.PlayerVictorious()
 
 
