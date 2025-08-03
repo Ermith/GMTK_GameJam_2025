@@ -46,9 +46,6 @@ func expand() -> void:
 	
 	for neighbor: Star in frontier[random_index].neightbors:
 		neighbor.civilize(self)
-		if neighbor.can_expand() and neighbor not in frontier:
-			frontier.append(neighbor)
-			owned_stars.append(neighbor)
 	
 	inner_stars.append(frontier[random_index])
 	frontier.remove_at(random_index)

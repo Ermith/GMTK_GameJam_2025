@@ -21,17 +21,22 @@ func set_color(in_color: Color) -> void:
 	color = in_color
 	
 func civilize(in_civilization: Civilization) -> void:
+	if civilization != null:
+		civilization.remove_star(self)
+		for neigh: Star in neightbors:
+			if neigh.civilization == civilization:
+				if neigh not in civilization.frontier:
+					civilization.frontier.append(neigh)
+					civilization.inner_stars.erase(neigh)
 	civilization = in_civilization
+	civilization.frontier.append(self)
+	civilization.owned_stars.append(self)
 	set_color(civilization.color)
 	for hyper_lane: HyperLane in hyper_lanes:
 		hyper_lane.civilize(in_civilization, self)
 
 func can_expand() -> bool:
-	for hyper_lane: HyperLane in hyper_lanes:
-		if hyper_lane.get_other(self).civilization == null:
-			return true
-			
-	return false
+	return true
 
 func destroy() -> void:
 	if civilization != null:

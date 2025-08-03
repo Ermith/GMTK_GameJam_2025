@@ -213,3 +213,26 @@ func get_current_position2d() -> Vector2:
 	
 func get_last_position2d() -> Vector2:
 	return Vector2(_last_position.x, _last_position.y)
+
+func cut_off_prefix(length_of_prefix: float) -> void:
+	print(length_of_prefix)
+	if length_of_prefix <= 0:
+		return
+	var _split_off_points: PackedVector3Array = snake_mesh.split_off_prefix(length_of_prefix)
+	snake_mesh.refresh_curve()
+	var length_change: float = snake_mesh.curve.get_baked_length() - game_stats.current_length
+	game_stats.current_length = snake_mesh.curve.get_baked_length()
+	var visited_lanes: Array[HyperLane] = []
+	for i: int in range(cut_callbacks.size() - 1, -1, -1):
+		var callback: CutCallback = cut_callbacks[i]
+		if length_of_prefix >= callback.length:
+			if is_instance_valid(callback.callback.get_object()):
+				callback.callback.call(callback.length)
+			cut_callbacks.remove_at(i)
+		else:
+			callback.length += length_change
+			var callback_obj: HyperLane = callback.callback.get_object() as HyperLane
+			if callback_obj:
+				if callback_obj not in visited_lanes:
+					visited_lanes.append(callback_obj)
+					callback_obj.player_cut_length += length_change

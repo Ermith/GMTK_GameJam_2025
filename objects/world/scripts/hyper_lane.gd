@@ -1,7 +1,7 @@
 extends Node3D
 class_name HyperLane
 
-@export var cut_player_delay: float = 2.0
+@export var cut_player_delay: float = 6.0
 @export var cut_color: Color = Color.RED
 
 @onready var mesh_instance_3d: MeshInstance3D = $MeshInstance3D
@@ -12,7 +12,7 @@ var hyper_lane_material: ShaderMaterial
 var from: Star
 var to: Star
 var _player: Player
-var _player_cut_length: float
+var player_cut_length: float
 var _cut_player_timer: float
 var _intersects_player: bool = false
 var _default_radius: float
@@ -49,7 +49,7 @@ func set_color(star: Star, color: Color) -> void:
 
 func _process(delta: float) -> void:
 	update_planned_cut(delta)
-	if from.civilization != null and to.civilization != null:
+	if from.civilization != null and to.civilization != null and from.civilization == to.civilization:
 		check_player_intersection()
 
 func check_player_intersection() -> void:	
@@ -66,8 +66,7 @@ func check_player_intersection() -> void:
 		plan_cut_player(intersection)
 
 func cut_player(length: float) -> void:
-	# TODO(Pali): please cut snake
-	pass
+	_player.cut_off_prefix(length)
 
 func plan_cut_player(intersection: Vector2) -> void:
 	var player_displacement: Vector2 = \
@@ -84,11 +83,11 @@ func plan_cut_player(intersection: Vector2) -> void:
 	var inverse_length_delta: float = \
 		player_displacement.length() * inverse_length_delta_percent
 		
-	_player_cut_length = \
+	player_cut_length = \
 		_player.game_stats.current_length - inverse_length_delta
 	
 	# Save the exact float it saved, so we can compare equality later
-	_player_cut_length = _player.register_cut_callback(cancel_planned_cut, _player_cut_length)
+	player_cut_length = _player.register_cut_callback(cancel_planned_cut, player_cut_length)
 	if not _intersects_player:
 		_cut_player_timer = cut_player_delay
 		_intersects_player = true
@@ -112,7 +111,7 @@ func cancel_planned_cut(length: float) -> void:
 	# the place we had to cut disappeared, we want to cancel the cut
 	# if the player passed through us multiple times,
 	# cancel only the latest cut
-	if length == _player_cut_length:
+	if length == player_cut_length:
 		_intersects_player = false
 
 func update_planned_cut(delta: float) -> void:
@@ -129,5 +128,5 @@ func update_planned_cut(delta: float) -> void:
 		tube_mesh.radius = lerp(_default_radius, _default_radius * 20, cut_color.a)
 		
 	if _intersects_player and _cut_player_timer < 0.0: 
-		cut_player(_player_cut_length)
+		cut_player(player_cut_length)
 		_intersects_player = false
