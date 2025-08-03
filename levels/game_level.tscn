@@ -30,6 +30,8 @@ shader_parameter/seed = 0.0
 background_mode = 1
 background_color = Color(0, 0, 0.0784314, 1)
 sky_custom_fov = 20.0
+tonemap_mode = 1
+tonemap_exposure = 5.0
 
 [node name="GameScene" type="Node3D"]
 script = ExtResource("1_qc6i3")

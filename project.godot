@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="GMTK_GameJam_2025"
+config/name="Galactic Holeworm"
 run/main_scene="uid://l45q1a43exjn"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
@@ -84,4 +84,6 @@ pause={
 
 [rendering]
 
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
 anti_aliasing/quality/screen_space_aa=1

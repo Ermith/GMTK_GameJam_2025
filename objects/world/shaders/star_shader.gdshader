@@ -49,7 +49,7 @@ void fragment() {
 	float shape = cross_shape * mid_near_power;
 	float final_shape = mix(shape * cross_intensity, mid_near_power, mid_near_power*glow_factor);
 	final_shape = clamp(final_shape, 0.0, 1.0);
-	vec3 final_color = mix(star_color, vec3(1.0), final_shape);
+	vec3 final_color = mix(star_color, vec3(1.0), 0.0); // wtf
 
 	EMISSION = final_color * intensity + anim_modifier * intensity_anim_factor;
 

@@ -1,11 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://l45q1a43exjn"]
+[gd_scene load_steps=12 format=3 uid="uid://l45q1a43exjn"]
 
 [ext_resource type="Script" uid="uid://hjtprpkb41to" path="res://levels/main_menu.gd" id="1_2xe4u"]
 [ext_resource type="PackedScene" uid="uid://dffsgo3pt25hk" path="res://sounds/background_audio.tscn" id="2_u84ys"]
 [ext_resource type="AudioStream" uid="uid://bngurhawb7q0y" path="res://sounds/music/DSGNDron_Exploration_SYSO_SYSO018.mp3" id="3_ftkqg"]
 [ext_resource type="PackedScene" uid="uid://k4gtnyctrda" path="res://objects/player/player_snake.tscn" id="4_ftkqg"]
 [ext_resource type="Script" uid="uid://c030c6bc8qx2v" path="res://resources/game_stats.gd" id="5_2xe4u"]
-[ext_resource type="PackedScene" uid="uid://bx8ran4d53pps" path="res://objects/world/scenes/galaxy_background.tscn" id="5_mqod3"]
+[ext_resource type="PackedScene" path="res://objects/world/scenes/galaxy_background.tscn" id="5_mqod3"]
 [ext_resource type="Shader" uid="uid://cdcdlvw2k5u2h" path="res://objects/world/shaders/galaxy_background.gdshader" id="6_2xe4u"]
 [ext_resource type="PackedScene" uid="uid://c7l2mq1d2hma" path="res://objects/world/scenes/galaxy.tscn" id="7_o7ktj"]
 
@@ -33,6 +33,13 @@ shader_parameter/colorBackground = Color(0.0253333, 0.02, 0.1, 1)
 shader_parameter/transparencyBackground = 0.0
 shader_parameter/seed = 0.0
 
+[sub_resource type="Environment" id="Environment_2xe4u"]
+background_mode = 1
+background_color = Color(0, 0, 0.0784314, 1)
+sky_custom_fov = 20.0
+tonemap_mode = 1
+tonemap_exposure = 4.0
+
 [node name="MainMenuScene" type="Node3D"]
 script = ExtResource("1_2xe4u")
 PreferredUI = 1
@@ -55,3 +62,6 @@ surface_material_override/0 = SubResource("ShaderMaterial_h1ibc")
 [node name="Galaxy" parent="." node_paths=PackedStringArray("player") instance=ExtResource("7_o7ktj")]
 civilization_spawn_colors = Array[Color]([Color(1, 0, 0, 1), Color(0.0178115, 0.995554, 0.297601, 1), Color(1, 0.973, 0.19, 1), Color(1, 0.191717, 0.744921, 1), Color(0.716667, 1, 0, 1), Color(0.668173, 0.163122, 1, 1), Color(0, 1, 0.716667, 1), Color(0.705673, 0.568984, 0.938477, 1), Color(0.96, 0.512, 0, 1)])
 player = NodePath("../PlayerSnake")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_2xe4u")
