@@ -12,6 +12,7 @@ signal ran_out_of_length
 @export var collision_radius: float = 0.05
 ## Fraction of the length that is recovered on collision at the minimum (perpendicular collision)
 @export var min_recovery_on_loop: float = 0.5
+@export var max_distance_from_start: float = INF
 
 @export var loop_effect_scene: PackedScene = preload("res://objects/player/loop_effect.tscn")
 
@@ -92,7 +93,18 @@ func collision_scan() -> void:
 			loop_effect.init(split_off_points, goodness_to_color(col_goodness))
 			loop_effect.update_points()
 
+func check_for_escaping_galaxy() -> void:
+	if head_position.length() < max_distance_from_start:
+		return
+	var turning_sign: float = 1.0
+	if head_position.cross(facing_vector).dot(turning_axis) < 0:
+		turning_sign = -1.0
+	else:
+		turning_sign = 1.0
+	cur_turning_speed = abs(turning_sign * get_turning_speed())
+
 func _physics_process(delta: float) -> void:
+	check_for_escaping_galaxy()
 	var moved_length: float = get_speed() * delta
 	facing_vector = facing_vector.rotated(turning_axis, get_turning_speed() * delta)
 	head_position += facing_vector * moved_length
