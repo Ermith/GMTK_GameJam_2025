@@ -19,6 +19,9 @@ func init(points: PackedVector3Array, color_: Color) -> void:
 	if mesh.get_clockwiseness() == -1:
 		velocity_mult *= -1
 	self.color = color_
+	mesh.refresh_curve()
+	mesh.smooth_out_points(int(mesh.points.size() * 1.3187))
+	update_points()
 
 func update_points() -> void:
 	var twodpoints: PackedVector2Array = PackedVector2Array()
