@@ -23,7 +23,7 @@ grow_vertical = 0
 [node name="TutorialLabel" type="Label" parent="LeftPanelContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = " P - Pause
+text = " ESC / P  - Pause
  W / S - zoom in / out
  SPACE - Change direction "
 
