@@ -23,6 +23,11 @@ func _process(delta: float) -> void:
 	if expansion_timer < 0.0:
 		expansion_timer = expansion_period
 		expand()
+	
+	cleanup_stars(owned_stars, false)
+	if owned_stars.is_empty():
+		queue_free()
+		return
 
 func expand() -> void:
 	# BECAUSE FUCKING LEAK INVALID VALUES WTF
