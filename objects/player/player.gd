@@ -25,6 +25,16 @@ var collision_cooldown: float = 0.0
 var max_colision_cooldown: float = 0.1
 var average_turning_speed: float = base_turning_speed
 
+class CutCallback:
+	var length: float
+	var callback: Callable
+
+	func _init(length_: float, callback_: Callable) -> void:
+		self.length = length_
+		self.callback = callback_
+
+var cut_callbacks: Array[CutCallback] = []
+
 @onready var snake_mesh: SnakeMesh = $SnakeMesh
 @onready var camera: CameraZoom = $Camera3D
 
@@ -87,6 +97,13 @@ func collision_scan() -> void:
 		collision_cooldown = max_colision_cooldown
 		head_position = nearest_point.point
 		snake_mesh.refresh_curve()
+
+		var length_left_intact: float = snake_mesh.curve.get_baked_length()
+		for i: int in range(cut_callbacks.size() - 1, -1, -1):
+			var callback: CutCallback = cut_callbacks[i]
+			if length_left_intact <= callback.length:
+				callback.callback.call()
+				cut_callbacks.remove_at(i)
 
 		if length_split_off > 0.5:
 			var loop_effect: LoopEffect = loop_effect_scene.instantiate()
@@ -179,3 +196,8 @@ func predict_future(steps: int, step_size: float) -> FutureState:
 			future_state.collided = true
 			break
 	return future_state
+
+func register_cut_callback(callback: Callable, length: float = -1) -> void:
+	if length < 0:
+		length = game_stats.current_length
+	cut_callbacks.append(CutCallback.new(length, callback))

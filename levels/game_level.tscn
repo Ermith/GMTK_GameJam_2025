@@ -17,6 +17,7 @@ PreferredUI = 5
 environment = SubResource("Environment_d65c1")
 
 [node name="Galaxy" parent="." instance=ExtResource("2_sklrn")]
+civilization_spawn_colors = Array[Color]([Color(1, 0, 0, 1), Color(0.0178115, 0.995554, 0.297601, 1), Color(1, 0.973, 0.19, 1), Color(1, 0.191717, 0.744921, 1), Color(0.716667, 1, 0, 1), Color(0.668173, 0.163122, 1, 1), Color(0, 1, 0.716667, 1), Color(0.705673, 0.568984, 0.938477, 1), Color(0.96, 0.512, 0, 1)])
 
 [node name="PlayerSnake" parent="." instance=ExtResource("3_d65c1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.956604, 0)
