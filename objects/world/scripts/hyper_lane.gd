@@ -34,8 +34,13 @@ func set_color(star: Star) -> void:
 	var color_param: String = "color"
 	if star == from:
 		color_param = "color2"
-		
-	hyper_lane_material.set_shader_parameter(color_param, star.color)
+
+	var color: Color = star.color
+	if star.civilization == null:
+		color.a = 0.3
+	else:
+		color.a = 0.69
+	hyper_lane_material.set_shader_parameter(color_param, color)
 
 func civilize(civilization: Civilization, star: Star) -> void:
 	set_color(star)
