@@ -15,7 +15,7 @@ class_name SnakeMesh
 @export var coloring_radius: float = 0.0
 @export var coloring_direction: Vector3 = Vector3(1, 0, 0)
 @export var head_distance_not_colored: float = 1.0
-@export var default_color: Color = Color(1, 1, 1, 1)
+@export var default_color: Color = Color(1, 1, 1, 0)
 
 var curve: Curve3D
 var clockwiseness: int = 0 # 1 for clockwise, -1 for counter-clockwise, 0 for unknown
@@ -125,7 +125,8 @@ func color_at_pos(t: float) -> Color:
 	var angle: float = direction.angle_to(coloring_direction)
 	var goodness: float = Player.collision_goodness(angle)
 	var color: Color = Player.goodness_to_color(goodness)
-	color = lerp(default_color, color, color_intensity)
+	# color = lerp(default_color, color, color_intensity)
+	color.a = color_intensity
 	return color
 
 func refresh_mesh() -> void:
@@ -192,7 +193,8 @@ func refresh_mesh() -> void:
 			normals.append(normal)
 			
 			var u: float = t
-			var v: float = float(i) / float(ring_segments)
+			var v: float = float(i) / float(ring_segments) + 0.25
+			v = v - floor(v)
 			uvs.append(Vector2(u, v))
 
 			colors.append(color_at_pos(t))
@@ -240,7 +242,8 @@ func refresh_mesh() -> void:
 				normals.append(normal)
 				
 				var u: float = 1.0
-				var v: float = float(i) / float(ring_segments)
+				var v: float = float(i) / float(ring_segments) + 0.25
+				v = v - floor(v)
 				uvs.append(Vector2(u, v))
 
 				colors.append(color_at_pos(1.0))
@@ -259,6 +262,7 @@ func refresh_mesh() -> void:
 				indices.append(previous_base_index + (i + 1) % ring_segments)
 
 	array_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, surface_array)
+	update_shader_params()
 
 
 class PointOnCurve:
@@ -362,3 +366,8 @@ func smooth_out_points(new_count: int = -1) -> void:
 		var point: Vector3 = curve.sample_baked(pos, cubic_interpolation)
 		new_points.append(point)
 	points = new_points
+
+func update_shader_params() -> void:
+	var shader: ShaderMaterial = material_override as ShaderMaterial
+	if shader:
+		shader.set_shader_parameter("length", curve.get_baked_length())

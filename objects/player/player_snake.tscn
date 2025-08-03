@@ -8,6 +8,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ma2x5"]
 render_priority = 0
 shader = ExtResource("2_7cxnn")
+shader_parameter/length = 1.0
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_rcpxh"]
 
