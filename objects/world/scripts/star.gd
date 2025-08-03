@@ -41,6 +41,7 @@ func can_expand() -> bool:
 func destroy() -> void:
 	if civilization != null:
 		civilization.remove_star(self)
+		civilization._player.game_stats.remaining_length += 2
 	
 	for hyper_lane: HyperLane in hyper_lanes:
 		var neighbor: Star = hyper_lane.get_other(self)

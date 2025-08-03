@@ -90,7 +90,7 @@ func collision_scan() -> void:
 		var collision_angle: float = facing_vector.angle_to(nearest_point.direction)
 		var raw_damage_fract: float = sin(collision_angle) ** 2 #1 - abs(cos(collision_angle))
 		var col_goodness: float = Player.collision_goodness(collision_angle)
-		var recovery_fract: float = clamp(col_goodness * (1 - min_recovery_on_loop) + min_recovery_on_loop, 0.0, 1.0)
+		var recovery_fract: float = clamp(col_goodness * (1 - min_recovery_on_loop) + min_recovery_on_loop, 0.0, 0.85)
 		# DebugDraw3D.draw_sphere(nearest_point.point, snake_mesh.radius + 0.1, Color(1, 0, 0), 0)
 		var split_off_points: PackedVector3Array = snake_mesh.split_off_suffix(nearest_point.offset)
 		distance_travelled_since_last_point = 0.0

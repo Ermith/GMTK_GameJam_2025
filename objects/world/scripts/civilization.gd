@@ -5,15 +5,17 @@ var owned_stars: Array[Star]
 var frontier: Array[Star]
 var inner_stars: Array[Star]
 var color: Color
+var _player: Player
 
 @export var expansion_period: float = 7.5
 var expansion_timer: float
 
-func initizlize(star: Star, in_color: Color) -> void:
+func initizlize(star: Star, in_color: Color, player: Player) -> void:
 	owned_stars.append(star)
 	frontier.append(star)
 	color = in_color
 	star.civilize(self)
+	_player = player
 
 func _ready() -> void:
 	expansion_timer = expansion_period
@@ -26,6 +28,7 @@ func _process(delta: float) -> void:
 	
 	cleanup_stars(owned_stars, false)
 	if owned_stars.is_empty():
+		_player.game_stats.remaining_length += 10
 		queue_free()
 		return
 

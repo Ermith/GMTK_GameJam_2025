@@ -81,7 +81,7 @@ func _ready() -> void:
 			#star.set_color(Color.from_hsv(randf(), 1.0, 1.0))
 			star.set_color(Color.DEEP_SKY_BLUE)
 			star.sector = sector
-			star.set_size(exp(randfn(log(0.5), 0.2)))
+			star.set_size(exp(randfn(log(0.5), 0.2)) * 1.5)
 
 	for i: int in range(stars.size()):
 		for j: int in range(stars.size()):
@@ -108,7 +108,7 @@ func _ready() -> void:
 	for star: Star in stars:
 		if star.sector.spawn:
 			var civilization: Civilization = CIVILIZATION.instantiate()
-			civilization.initizlize(star, civilization_spawn_colors[civilization_index])
+			civilization.initizlize(star, civilization_spawn_colors[civilization_index], player)
 			civilization_index += 1
 			add_child(civilization)
 			civilization.tree_exited.connect(civilization_died)

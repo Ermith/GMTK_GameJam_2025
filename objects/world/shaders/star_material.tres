@@ -6,8 +6,8 @@
 render_priority = 1
 shader = ExtResource("1_8omo1")
 shader_parameter/star_color = Color(0, 0.5, 1, 1)
-shader_parameter/cross_factor = 40.0
-shader_parameter/cross_intensity = 0.6
+shader_parameter/cross_factor = 51.627
+shader_parameter/cross_intensity = 0.872
 shader_parameter/mid_power = 4.5
 shader_parameter/glow_factor = 0.5
 shader_parameter/intensity = 1.9

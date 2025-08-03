@@ -1,12 +1,12 @@
 [gd_scene load_steps=11 format=3 uid="uid://l45q1a43exjn"]
 
 [ext_resource type="Script" uid="uid://hjtprpkb41to" path="res://levels/main_menu.gd" id="1_2xe4u"]
-[ext_resource type="PackedScene" path="res://sounds/background_audio.tscn" id="2_u84ys"]
+[ext_resource type="PackedScene" uid="uid://dffsgo3pt25hk" path="res://sounds/background_audio.tscn" id="2_u84ys"]
 [ext_resource type="AudioStream" uid="uid://bngurhawb7q0y" path="res://sounds/music/DSGNDron_Exploration_SYSO_SYSO018.mp3" id="3_ftkqg"]
 [ext_resource type="PackedScene" uid="uid://k4gtnyctrda" path="res://objects/player/player_snake.tscn" id="4_ftkqg"]
 [ext_resource type="Script" uid="uid://c030c6bc8qx2v" path="res://resources/game_stats.gd" id="5_2xe4u"]
-[ext_resource type="PackedScene" path="res://objects/world/scenes/galaxy_background.tscn" id="5_mqod3"]
-[ext_resource type="Shader" path="res://objects/world/shaders/galaxy_background.gdshader" id="6_2xe4u"]
+[ext_resource type="PackedScene" uid="uid://bx8ran4d53pps" path="res://objects/world/scenes/galaxy_background.tscn" id="5_mqod3"]
+[ext_resource type="Shader" uid="uid://cdcdlvw2k5u2h" path="res://objects/world/shaders/galaxy_background.gdshader" id="6_2xe4u"]
 [ext_resource type="PackedScene" uid="uid://c7l2mq1d2hma" path="res://objects/world/scenes/galaxy.tscn" id="7_o7ktj"]
 
 [sub_resource type="Resource" id="Resource_o7ktj"]
@@ -40,7 +40,6 @@ PreferredUI = 1
 [node name="BackgroundAudio" parent="." instance=ExtResource("2_u84ys")]
 stream = ExtResource("3_ftkqg")
 autoplay = true
-parameters/looping = true
 parameters/looping = true
 
 [node name="PlayerSnake" parent="." instance=ExtResource("4_ftkqg")]
