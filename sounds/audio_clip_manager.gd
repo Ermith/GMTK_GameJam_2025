@@ -12,6 +12,9 @@ var musicVolume: float = 1.0
 
 signal volume_settings_changed (newMaster: float, newMusic: float, newSfx: float)
 
+func _init() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
+
 func _ready() -> void:    
 	for i: int in num_players:
 		var player: AudioStreamPlayer = AudioStreamPlayer.new()

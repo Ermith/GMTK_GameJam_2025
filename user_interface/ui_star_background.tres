@@ -1,0 +1,20 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://145c5qu15pd8"]
+
+[ext_resource type="Shader" uid="uid://b4632hc81bqtn" path="res://user_interface/ui_star_background.gdshader" id="1_ol82e"]
+
+[resource]
+shader = ExtResource("1_ol82e")
+shader_parameter/horizontalMovement = 0.1
+shader_parameter/verticalMovement = 0.1
+shader_parameter/frequencyStar = 0.1
+shader_parameter/sizeStar = 100.0
+shader_parameter/brightnessStar = 3.0
+shader_parameter/shineFrequencyStar = 8.0
+shader_parameter/transparencyStar = 0.0
+shader_parameter/starIterations = 3
+shader_parameter/frequencyBgStar = 0.996
+shader_parameter/shineFrequencyBgStar = 1.0
+shader_parameter/transparencyBgStar = 0.0
+shader_parameter/colorBackground = Color(0.0253333, 0.02, 0.1, 1)
+shader_parameter/transparencyBackground = 0.0
+shader_parameter/seed = 0.0

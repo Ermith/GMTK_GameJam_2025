@@ -5,7 +5,7 @@
 [ext_resource type="StyleBox" uid="uid://b687jcwmbidor" path="res://user_interface/resources/hover_style_box_flat.tres" id="3_8rxma"]
 [ext_resource type="StyleBox" uid="uid://btie2dbya0fng" path="res://user_interface/resources/normal_style_box_flat.tres" id="4_vygtb"]
 [ext_resource type="StyleBox" uid="uid://cuotcvjee75rh" path="res://user_interface/resources/pressed_style_box_flat.tres" id="5_bsk11"]
-[ext_resource type="FontFile" uid="uid://bheq0pxulgf61" path="res://user_interface/resources/playwrite/PlaywriteGBJ-VariableFont_wght.ttf" id="6_ck4ck"]
+[ext_resource type="FontFile" uid="uid://cr5rq4wa3kypd" path="res://user_interface/resources/playwrite/Iceland-Regular.ttf" id="6_ck4ck"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ck4ck"]
 bg_color = Color(0, 0, 0, 0)

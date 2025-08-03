@@ -41,6 +41,7 @@ var cut_callbacks: Array[CutCallback] = []
 
 func _ready() -> void:
 	reset_snake()
+	AudioClipManager.play("res://sounds/sfx/breathe.mp3")
 
 func reset_snake() -> void:
 	snake_mesh.points.clear()
@@ -99,6 +100,13 @@ func collision_scan() -> void:
 		collision_cooldown = max_colision_cooldown
 		head_position = nearest_point.point
 		snake_mesh.refresh_curve()
+		
+		if col_goodness > 0.66:
+			AudioClipManager.play("res://sounds/sfx/eat_self.wav", 0.5)
+		elif col_goodness > 0.33:
+			AudioClipManager.play("res://sounds/sfx/eat_self2.wav", 0.5)
+		else:
+			AudioClipManager.play("res://sounds/sfx/eat_self3.wav", 0.5)
 
 		var length_left_intact: float = snake_mesh.curve.get_baked_length()
 		for i: int in range(cut_callbacks.size() - 1, -1, -1):

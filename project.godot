@@ -35,10 +35,14 @@ gdscript/warnings/unsafe_call_argument=2
 
 settings/addon_root_folder="res://addons/debug_draw_3d"
 
+[global_group]
+
+Button=""
+
 [gui]
 
 theme/custom="uid://b6o3xt1uqqd08"
-theme/custom_font="uid://bheq0pxulgf61"
+theme/custom_font="uid://cr5rq4wa3kypd"
 
 [input]
 

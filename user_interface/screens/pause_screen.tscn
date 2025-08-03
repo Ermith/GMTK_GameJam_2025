@@ -31,15 +31,15 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 
-[node name="ResumeButton" type="Button" parent="VBoxContainer/VBoxContainer"]
+[node name="ResumeButton" type="Button" parent="VBoxContainer/VBoxContainer" groups=["Button"]]
 layout_mode = 2
 text = "Resume"
 
-[node name="RestartButton" type="Button" parent="VBoxContainer/VBoxContainer"]
+[node name="RestartButton" type="Button" parent="VBoxContainer/VBoxContainer" groups=["Button"]]
 layout_mode = 2
 text = "Restart"
 
-[node name="MenuButton" type="Button" parent="VBoxContainer/VBoxContainer"]
+[node name="MenuButton" type="Button" parent="VBoxContainer/VBoxContainer" groups=["Button"]]
 layout_mode = 2
 text = "Menu"
 
