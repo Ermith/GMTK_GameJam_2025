@@ -24,6 +24,7 @@ var stored_backup_curve_point: Vector3 = Vector3.ZERO
 var collision_cooldown: float = 0.0
 var max_colision_cooldown: float = 0.1
 var average_turning_speed: float = base_turning_speed
+var _last_position: Vector3
 
 class CutCallback:
 	var length: float
@@ -47,6 +48,7 @@ func reset_snake() -> void:
 	game_stats.reset()
 	distance_travelled_since_last_point = 0.0
 	stored_backup_curve_point = Vector3.ZERO
+	_last_position = head_position + global_position
 
 func get_speed() -> float:
 	return game_stats.base_speed
@@ -102,7 +104,8 @@ func collision_scan() -> void:
 		for i: int in range(cut_callbacks.size() - 1, -1, -1):
 			var callback: CutCallback = cut_callbacks[i]
 			if length_left_intact <= callback.length:
-				callback.callback.call()
+				if is_instance_valid(callback.callback.get_object()):
+					callback.callback.call(callback.length)
 				cut_callbacks.remove_at(i)
 
 		if length_split_off > 0.5:
@@ -124,10 +127,11 @@ func check_for_escaping_galaxy() -> void:
 		turning_sign = 1.0
 	cur_turning_speed = abs(turning_sign * get_turning_speed())
 
-func _physics_process(delta: float) -> void:
+func _physics_process(delta: float) -> void:	
 	check_for_escaping_galaxy()
 	var moved_length: float = get_speed() * delta
 	facing_vector = facing_vector.rotated(turning_axis, get_turning_speed() * delta)
+	_last_position = head_position + global_position
 	head_position += facing_vector * moved_length
 	collision_scan()
 	if distance_travelled_since_last_point >= point_adding_interval:
@@ -197,7 +201,16 @@ func predict_future(steps: int, step_size: float) -> FutureState:
 			break
 	return future_state
 
-func register_cut_callback(callback: Callable, length: float = -1) -> void:
+func register_cut_callback(callback: Callable, length: float = -1) -> float:
 	if length < 0:
 		length = game_stats.current_length
+	
 	cut_callbacks.append(CutCallback.new(length, callback))
+	return length
+
+func get_current_position2d() -> Vector2:
+	var position3d: Vector3 = head_position + global_position
+	return Vector2(position3d.x, position3d.y)
+	
+func get_last_position2d() -> Vector2:
+	return Vector2(_last_position.x, _last_position.y)

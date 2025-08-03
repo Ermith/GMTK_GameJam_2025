@@ -5,6 +5,7 @@ extends Node3D
 @export var CIVILIZATION: PackedScene
 @export var civilization_spawn_colors: Array[Color]
 @export var star_height_dev: float = 0.25
+@export var player: Player
 
 var stars: Array[Star]
 
@@ -92,7 +93,7 @@ func _ready() -> void:
 			stars[j].neightbors.append(stars[i])
 			var hyper_lane: HyperLane = HYPER_LANE.instantiate()
 			add_child(hyper_lane)
-			hyper_lane.set_lane(stars[i], stars[j])
+			hyper_lane.set_lane(stars[i], stars[j], player)
 			stars[i].hyper_lanes.append(hyper_lane)
 			stars[j].hyper_lanes.append(hyper_lane)
 	
