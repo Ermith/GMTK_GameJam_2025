@@ -4,7 +4,7 @@ extends Node3D
 @export var HYPER_LANE: PackedScene
 @export var CIVILIZATION: PackedScene
 @export var civilization_spawn_colors: Array[Color]
-@export var star_height_dev: float = 0.4
+@export var star_height_dev: float = 0.25
 
 var stars: Array[Star]
 
@@ -70,11 +70,12 @@ func _ready() -> void:
 			var star: Star = STAR.instantiate()
 			add_child(star)
 			stars.append(star)
-			star.global_position = Vector3(pos.x, pos.y, randf() * (2 * star_height_dev) - star_height_dev)
+			star.global_position = Vector3(pos.x, pos.y, randfn(0, star_height_dev))
 			#star.set_color(Color.from_hsv(randf(), 1.0, 1.0))
 			star.set_color(Color.DEEP_SKY_BLUE)
 			star.sector = sector
-	
+			star.set_size(exp(randfn(log(0.5), 0.2)))
+
 	for i: int in range(stars.size()):
 		for j: int in range(stars.size()):
 			

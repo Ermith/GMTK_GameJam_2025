@@ -12,13 +12,13 @@ func _process(delta: float) -> void:
 		zoom_camera(zoom_speed * delta)
 
 func zoom_camera(delta: float) -> void:
-	var new_distance: float = global_position.z + delta
+	var new_distance: float = position.z + delta
 	if new_distance < min_dist:
 		new_distance = min_dist
 	elif new_distance > max_dist:
 		new_distance = max_dist
-	global_position.z = new_distance
+	position.z = new_distance
 
 func set_target_position(target_position: Vector3) -> void:
-	global_position.x = target_position.x
-	global_position.y = target_position.y
+	position.x = target_position.x
+	position.y = target_position.y

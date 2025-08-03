@@ -1,4 +1,4 @@
-extends Node
+extends Node3D
 class_name LoopEffect
 
 @onready var mesh: SnakeMesh = $SnakeMesh
@@ -56,15 +56,15 @@ func _process(delta: float) -> void:
 	timer += delta
 
 	var mat: StandardMaterial3D = mesh.material_override as StandardMaterial3D
-	mat.albedo_color = color
+	mat.albedo_color = Color.WHITE
 	mat.albedo_color.a = main_alpha_fn(time_frac())
 	mat.emission = color
-	mat.emission.a = main_alpha_fn(time_frac())
+	# mat.emission.a = main_alpha_fn(time_frac())
 	var polygon_mat: StandardMaterial3D = polygon.material_override as StandardMaterial3D
-	polygon_mat.albedo_color = color
+	polygon_mat.albedo_color = Color.WHITE
 	polygon_mat.albedo_color.a = main_alpha_fn(time_frac()) * polygon_alpha_fn(time_frac())
 	polygon_mat.emission = color
-	polygon_mat.emission.a = main_alpha_fn(time_frac()) * polygon_alpha_fn(time_frac())
+	# polygon_mat.emission.a = main_alpha_fn(time_frac()) * polygon_alpha_fn(time_frac())
 
 	if timer > max_timer:
 		queue_free()

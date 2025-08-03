@@ -14,6 +14,7 @@ var color: Color
 func _ready() -> void:
 	mesh_instance_3d.material_override = STAR_MATERIAL.duplicate(false)
 	shader_material = mesh_instance_3d.material_override as ShaderMaterial
+	mesh_instance_3d.mesh = mesh_instance_3d.mesh.duplicate(false)
 
 func set_color(in_color: Color) -> void:
 	shader_material.set_shader_parameter("star_color", in_color)
@@ -46,3 +47,7 @@ func destroy() -> void:
 		hyper_lane.queue_free()
 	
 	queue_free()
+
+func set_size(size: float) -> void:
+	var mesh: PlaneMesh = mesh_instance_3d.mesh as PlaneMesh
+	mesh.size = Vector2(size, size)
