@@ -35,6 +35,8 @@ func _input(event: InputEvent) -> void:
 			trace_point.on_explode()
 			trace_points.erase(trace_point)
 		get_player().register_cut_callback(callback)
+	if event is InputEventKey and Input.is_key_pressed(KEY_R):
+		get_player().cut_off_prefix(get_player().game_stats.current_length * 0.33)
 
 func _process(_delta: float) -> void:
 	for trace_point: TracePoint in trace_points:
