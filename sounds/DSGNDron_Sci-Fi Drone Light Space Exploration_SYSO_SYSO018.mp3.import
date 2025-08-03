@@ -2,7 +2,11 @@
 
 importer="mp3"
 type="AudioStreamMP3"
+<<<<<<< HEAD
+uid="uid://blcfqkp5137xs"
+=======
 uid="uid://botyod7c2u352"
+>>>>>>> 73843c13e359363de1a30cdd8b51bebc102d8c3a
 path="res://.godot/imported/DSGNDron_Sci-Fi Drone Light Space Exploration_SYSO_SYSO018.mp3-191b37edcd60618780272b7e025b7d21.mp3str"
 
 [deps]

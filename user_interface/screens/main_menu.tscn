@@ -21,7 +21,15 @@ grow_vertical = 2
 
 [node name="TitleLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "SNAKE SPACE TERMINATOR 4000"
+theme_type_variation = &"TitleLabel"
+text = "Holeworm"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SubTitleLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"SubTitleLabel"
+text = "\"If you gaze long into a wormhole, the worm gazes back.\""
 horizontal_alignment = 1
 vertical_alignment = 1
 

@@ -2,7 +2,11 @@
 
 importer="mp3"
 type="AudioStreamMP3"
+<<<<<<< HEAD
+uid="uid://cb4v0e8p3s85t"
+=======
 uid="uid://be3rgfkdxgfbq"
+>>>>>>> 73843c13e359363de1a30cdd8b51bebc102d8c3a
 path="res://.godot/imported/DSGNDron_Sci-Fi Pad Digital Fallen Angel_SYSO_SYSO018.mp3-da481713e43e2e69bfab3e92c9eb8eef.mp3str"
 
 [deps]

@@ -37,6 +37,7 @@ settings/addon_root_folder="res://addons/debug_draw_3d"
 [gui]
 
 theme/custom="uid://b6o3xt1uqqd08"
+theme/custom_font="uid://bheq0pxulgf61"
 
 [input]
 
