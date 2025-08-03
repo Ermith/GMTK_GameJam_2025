@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=9 format=3 uid="uid://b6o3xt1uqqd08"]
+[gd_resource type="Theme" load_steps=10 format=3 uid="uid://b6o3xt1uqqd08"]
 
 [ext_resource type="StyleBox" uid="uid://cete72c23rosx" path="res://user_interface/resources/disabled_style_box_flat.tres" id="1_8b13q"]
 [ext_resource type="StyleBox" uid="uid://b454ppj7ioeco" path="res://user_interface/resources/focus_style_box_flat.tres" id="2_ck4ck"]
@@ -6,6 +6,18 @@
 [ext_resource type="StyleBox" uid="uid://btie2dbya0fng" path="res://user_interface/resources/normal_style_box_flat.tres" id="4_vygtb"]
 [ext_resource type="StyleBox" uid="uid://cuotcvjee75rh" path="res://user_interface/resources/pressed_style_box_flat.tres" id="5_bsk11"]
 [ext_resource type="FontFile" uid="uid://bheq0pxulgf61" path="res://user_interface/resources/playwrite/PlaywriteGBJ-VariableFont_wght.ttf" id="6_ck4ck"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ck4ck"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 0)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ck4ck"]
 
@@ -25,7 +37,8 @@ Label/colors/font_outline_color = Color(0, 0, 0, 1)
 Label/colors/font_shadow_color = Color(0, 0, 0, 0)
 Label/constants/line_spacing = 2
 Label/constants/outline_size = 4
-Label/font_sizes/font_size = 24
+Label/font_sizes/font_size = 16
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_ck4ck")
 SubTitleLabel/base_type = &"Label"
 SubTitleLabel/colors/font_color = Color(1, 1, 1, 1)
 SubTitleLabel/colors/font_outline_color = Color(0, 0, 0, 1)

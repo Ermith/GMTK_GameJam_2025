@@ -1,9 +1,9 @@
 extends GameScreenBase
 class_name GameHudScreen
 
-@onready var current_label: Label = $PanelContainer/VBoxContainer/CurrentLabel
-@onready var remaining_label: Label = $PanelContainer/VBoxContainer/RemainingLabel
-@onready var progress_bar: ProgressBar = $PanelContainer/VBoxContainer/ProgressBar
+@onready var tutorial_label: Label = %TutorialLabel
+@onready var remaining_label: Label = %RemainingLabel
+@onready var current_label: Label = %CurrentLabel
 
 @export var game_stats: GameStats = preload("res://resources/game_stats.tres")
 
