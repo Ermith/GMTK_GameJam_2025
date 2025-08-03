@@ -67,7 +67,8 @@ func check_player_intersection() -> void:
 
 func cut_player(length: float) -> void:
 	_player.cut_off_prefix(length)
-	AudioClipManager.play("res://sounds/sfx/Bluezone_BC0303_futuristic_user_interface_transition_006.mp3", 0.3)
+	if not _player.autopilot:
+		AudioClipManager.play("res://sounds/sfx/Bluezone_BC0303_futuristic_user_interface_transition_006.mp3", 0.3)
 
 func plan_cut_player(intersection: Vector2) -> void:
 	var player_displacement: Vector2 = \

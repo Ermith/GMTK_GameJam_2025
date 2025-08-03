@@ -1,8 +1,37 @@
-[gd_scene load_steps=4 format=3 uid="uid://l45q1a43exjn"]
+[gd_scene load_steps=11 format=3 uid="uid://l45q1a43exjn"]
 
 [ext_resource type="Script" uid="uid://372750u8m601" path="res://levels/level_base.gd" id="1_a0bpi"]
-[ext_resource type="PackedScene" uid="uid://dffsgo3pt25hk" path="res://sounds/background_audio.tscn" id="2_u84ys"]
+[ext_resource type="PackedScene" path="res://sounds/background_audio.tscn" id="2_u84ys"]
 [ext_resource type="AudioStream" uid="uid://bngurhawb7q0y" path="res://sounds/music/DSGNDron_Exploration_SYSO_SYSO018.mp3" id="3_ftkqg"]
+[ext_resource type="PackedScene" uid="uid://k4gtnyctrda" path="res://objects/player/player_snake.tscn" id="4_ftkqg"]
+[ext_resource type="Script" uid="uid://c030c6bc8qx2v" path="res://resources/game_stats.gd" id="5_2xe4u"]
+[ext_resource type="PackedScene" path="res://objects/world/scenes/galaxy_background.tscn" id="5_mqod3"]
+[ext_resource type="Shader" path="res://objects/world/shaders/galaxy_background.gdshader" id="6_2xe4u"]
+[ext_resource type="PackedScene" uid="uid://c7l2mq1d2hma" path="res://objects/world/scenes/galaxy.tscn" id="7_o7ktj"]
+
+[sub_resource type="Resource" id="Resource_o7ktj"]
+script = ExtResource("5_2xe4u")
+base_speed = 1.5
+initial_length = 200.0
+metadata/_custom_type_script = "uid://c030c6bc8qx2v"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h1ibc"]
+render_priority = 0
+shader = ExtResource("6_2xe4u")
+shader_parameter/horizontalMovement = 0.1
+shader_parameter/verticalMovement = 0.1
+shader_parameter/frequencyStar = 0.1
+shader_parameter/sizeStar = 100.0
+shader_parameter/brightnessStar = 3.0
+shader_parameter/shineFrequencyStar = 8.0
+shader_parameter/transparencyStar = 0.0
+shader_parameter/starIterations = 3
+shader_parameter/frequencyBgStar = 0.996
+shader_parameter/shineFrequencyBgStar = 0.0
+shader_parameter/transparencyBgStar = 0.0
+shader_parameter/colorBackground = Color(0.0253333, 0.02, 0.1, 1)
+shader_parameter/transparencyBackground = 0.0
+shader_parameter/seed = 0.0
 
 [node name="MainMenuScene" type="Node3D"]
 script = ExtResource("1_a0bpi")
@@ -12,3 +41,18 @@ PreferredUI = 1
 stream = ExtResource("3_ftkqg")
 autoplay = true
 parameters/looping = true
+parameters/looping = true
+
+[node name="PlayerSnake" parent="." instance=ExtResource("4_ftkqg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.956604, 0)
+game_stats = SubResource("Resource_o7ktj")
+max_distance_from_start = 17.0
+autopilot = true
+
+[node name="GalaxyBackground" parent="." instance=ExtResource("5_mqod3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.25477)
+surface_material_override/0 = SubResource("ShaderMaterial_h1ibc")
+
+[node name="Galaxy" parent="." node_paths=PackedStringArray("player") instance=ExtResource("7_o7ktj")]
+civilization_spawn_colors = Array[Color]([Color(1, 0, 0, 1), Color(0.0178115, 0.995554, 0.297601, 1), Color(1, 0.973, 0.19, 1), Color(1, 0.191717, 0.744921, 1), Color(0.716667, 1, 0, 1), Color(0.668173, 0.163122, 1, 1), Color(0, 1, 0.716667, 1), Color(0.705673, 0.568984, 0.938477, 1), Color(0.96, 0.512, 0, 1)])
+player = NodePath("../PlayerSnake")

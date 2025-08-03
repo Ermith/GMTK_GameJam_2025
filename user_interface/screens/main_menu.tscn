@@ -1,9 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://c3ilgtftnm4m"]
+[gd_scene load_steps=2 format=3 uid="uid://c3ilgtftnm4m"]
 
 [ext_resource type="Script" uid="uid://b6kp5eycf7wrc" path="res://user_interface/screens/main_menu.gd" id="1_el21f"]
-[ext_resource type="Material" uid="uid://145c5qu15pd8" path="res://user_interface/ui_star_background.tres" id="2_7fpoc"]
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_gfkmc"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -13,16 +10,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_el21f")
-
-[node name="TextureRect" type="TextureRect" parent="."]
-material = ExtResource("2_7fpoc")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("CanvasTexture_gfkmc")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1

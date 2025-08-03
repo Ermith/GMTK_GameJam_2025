@@ -14,6 +14,7 @@ signal looped(snake_mesh: SnakeMesh)
 ## Fraction of the length that is recovered on collision at the minimum (perpendicular collision)
 @export var min_recovery_on_loop: float = 0.5
 @export var max_distance_from_start: float = INF
+@export var autopilot: bool = false
 
 @export var loop_effect_scene: PackedScene = preload("res://objects/player/loop_effect.tscn")
 const DEAD_SNAKE: PackedScene = preload("res://objects/player/dead_snake.tscn")
@@ -43,7 +44,8 @@ var cut_callbacks: Array[CutCallback] = []
 
 func _ready() -> void:
 	reset_snake()
-	AudioClipManager.play("res://sounds/sfx/breathe.mp3")
+	if not autopilot:
+		AudioClipManager.play("res://sounds/sfx/breathe.mp3")
 
 func reset_snake() -> void:
 	snake_mesh.points.clear()
@@ -64,8 +66,9 @@ func swap_direction() -> void:
 	cur_turning_speed = -cur_turning_speed
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("swap direction"):
-		swap_direction()
+	if not autopilot:
+		if event.is_action_pressed("swap direction"):
+			swap_direction()
 
 static func collision_goodness(angle: float) -> float:
 	var raw_damage_fract: float = sin(angle) ** 2
@@ -104,12 +107,13 @@ func collision_scan() -> void:
 		head_position = nearest_point.point
 		snake_mesh.refresh_curve()
 		
-		if col_goodness > 0.66:
-			AudioClipManager.play("res://sounds/sfx/eat_self.wav", 0.5)
-		elif col_goodness > 0.33:
-			AudioClipManager.play("res://sounds/sfx/eat_self2.wav", 0.5)
-		else:
-			AudioClipManager.play("res://sounds/sfx/eat_self3.wav", 0.5)
+		if not autopilot:
+			if col_goodness > 0.66:
+				AudioClipManager.play("res://sounds/sfx/eat_self.wav", 0.5)
+			elif col_goodness > 0.33:
+				AudioClipManager.play("res://sounds/sfx/eat_self2.wav", 0.5)
+			else:
+				AudioClipManager.play("res://sounds/sfx/eat_self3.wav", 0.5)
 
 		var length_left_intact: float = snake_mesh.curve.get_baked_length()
 		for i: int in range(cut_callbacks.size() - 1, -1, -1):
@@ -174,18 +178,28 @@ func _physics_process(delta: float) -> void:
 	snake_mesh.refresh_mesh()
 	game_stats.current_length = snake_mesh.curve.get_baked_length()
 
-func _process(_delta: float) -> void:
+var time_since_last_autopilot_check: float = 0.0
+
+func _process(delta: float) -> void:
 	var shader: ShaderMaterial = snake_mesh.get_material_override() as ShaderMaterial
 	if shader:
 		shader.set_shader_parameter("lengthOffset", totalLengthLost)
 	if snake_mesh.points.size() < 2:
 		return
+	if autopilot and time_since_last_autopilot_check > 1.5:
+		var prob: float = 0.005
+		if randf() < prob:
+			swap_direction()
+			time_since_last_autopilot_check = 0.0
+	time_since_last_autopilot_check += delta
 	camera.set_target_position(head_position)
 
 func death() -> void:
 	Global.LogInfo("Player has died")
-	GameInstance.PlayerDefeated()
-	reset_snake()
+	if autopilot:
+		reset_snake()
+	else:
+		GameInstance.PlayerDefeated()
 
 class FutureState:
 	var head_position: Vector3
