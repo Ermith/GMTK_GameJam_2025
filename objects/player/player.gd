@@ -92,6 +92,8 @@ func collision_scan() -> void:
 			get_parent().add_child(loop_effect)
 			loop_effect.init(split_off_points, goodness_to_color(col_goodness))
 			loop_effect.update_points()
+			loop_effect.global_position = global_position
+			loop_effect.mesh.radius = snake_mesh.radius
 
 func check_for_escaping_galaxy() -> void:
 	if head_position.length() < max_distance_from_start:
