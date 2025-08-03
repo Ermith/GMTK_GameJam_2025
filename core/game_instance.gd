@@ -75,7 +75,8 @@ func _resume() -> void:
 	get_tree().paused = false
 	
 func _pause() -> void:
-	get_tree().paused = true
+	if get_tree():
+		get_tree().paused = true
 
 func PlayerDefeated() -> void:
 	Global.GetUIManager().SwitchToMode(UI.Mode.DEFEAT)
