@@ -170,7 +170,7 @@ func _process(_delta: float) -> void:
 
 func death() -> void:
 	Global.LogInfo("Player has died")
-	#GameInstance.PlayerDefeated()
+	GameInstance.PlayerDefeated()
 	reset_snake()
 
 class FutureState:
