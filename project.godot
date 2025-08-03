@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 Global="*res://core/global.gd"
 GameInstance="*res://core/game_instance.gd"
 UIManager="*res://user_interface/ui_manager.tscn"
+AudioClipManager="*res://sounds/audio_clip_manager.gd"
 
 [debug]
 

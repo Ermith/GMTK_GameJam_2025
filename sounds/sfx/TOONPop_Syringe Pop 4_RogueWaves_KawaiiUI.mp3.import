@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c4x037oce6f05"
+path="res://.godot/imported/TOONPop_Syringe Pop 4_RogueWaves_KawaiiUI.mp3-15f85dfc542b9f01e10837280d137a67.mp3str"
+
+[deps]
+
+source_file="res://sounds/sfx/TOONPop_Syringe Pop 4_RogueWaves_KawaiiUI.mp3"
+dest_files=["res://.godot/imported/TOONPop_Syringe Pop 4_RogueWaves_KawaiiUI.mp3-15f85dfc542b9f01e10837280d137a67.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
