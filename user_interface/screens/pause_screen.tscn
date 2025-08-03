@@ -21,7 +21,8 @@ grow_vertical = 2
 
 [node name="TitleLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "PAUSED"
+theme_type_variation = &"TitleLabel"
+text = "Paused"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -32,15 +33,15 @@ size_flags_vertical = 6
 
 [node name="ResumeButton" type="Button" parent="VBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "RESUME"
+text = "Resume"
 
 [node name="RestartButton" type="Button" parent="VBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "RESTART"
+text = "Restart"
 
 [node name="MenuButton" type="Button" parent="VBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "MENU"
+text = "Menu"
 
 [connection signal="pressed" from="VBoxContainer/VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]

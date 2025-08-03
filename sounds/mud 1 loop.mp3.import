@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bxv7b3rpngybw"
+path="res://.godot/imported/mud 1 loop.mp3-214fc6c999c6c2bb8a7e0d7d0d74a305.mp3str"
+
+[deps]
+
+source_file="res://sounds/mud 1 loop.mp3"
+dest_files=["res://.godot/imported/mud 1 loop.mp3-214fc6c999c6c2bb8a7e0d7d0d74a305.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

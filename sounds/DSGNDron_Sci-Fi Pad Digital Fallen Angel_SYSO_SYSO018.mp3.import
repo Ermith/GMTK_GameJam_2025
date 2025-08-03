@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cb4v0e8p3s85t"
+path="res://.godot/imported/DSGNDron_Sci-Fi Pad Digital Fallen Angel_SYSO_SYSO018.mp3-da481713e43e2e69bfab3e92c9eb8eef.mp3str"
+
+[deps]
+
+source_file="res://sounds/DSGNDron_Sci-Fi Pad Digital Fallen Angel_SYSO_SYSO018.mp3"
+dest_files=["res://.godot/imported/DSGNDron_Sci-Fi Pad Digital Fallen Angel_SYSO_SYSO018.mp3-da481713e43e2e69bfab3e92c9eb8eef.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
