@@ -1,13 +1,26 @@
 [gd_scene load_steps=4 format=3 uid="uid://bx8ran4d53pps"]
 
-[ext_resource type="Shader" uid="uid://cdcdlvw2k5u2h" path="res://objects/world/shaders/galaxy_background.gdshader" id="1_nfedj"]
+[ext_resource type="QuadMesh" uid="uid://x81ki7jepa0g" path="res://objects/world/civilization_background.tres" id="1_nfedj"]
+[ext_resource type="Shader" uid="uid://cdcdlvw2k5u2h" path="res://objects/world/shaders/galaxy_background.gdshader" id="2_2a10n"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_2a10n"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oe08h"]
 render_priority = 0
-shader = ExtResource("1_nfedj")
-
-[sub_resource type="QuadMesh" id="QuadMesh_oe08h"]
-material = SubResource("ShaderMaterial_2a10n")
+shader = ExtResource("2_2a10n")
+shader_parameter/horizontalMovement = 0.1
+shader_parameter/verticalMovement = 0.1
+shader_parameter/frequencyStar = 0.1
+shader_parameter/sizeStar = 100.0
+shader_parameter/brightnessStar = 3.0
+shader_parameter/shineFrequencyStar = 8.0
+shader_parameter/transparencyStar = 0.0
+shader_parameter/starIterations = 3
+shader_parameter/frequencyBgStar = 0.996
+shader_parameter/shineFrequencyBgStar = 1.0
+shader_parameter/transparencyBgStar = 0.0
+shader_parameter/colorBackground = Color(0.05, 0.04, 0.2, 1)
+shader_parameter/transparencyBackground = 0.0
+shader_parameter/seed = 0.0
 
 [node name="GalaxyBackground" type="MeshInstance3D"]
-mesh = SubResource("QuadMesh_oe08h")
+mesh = ExtResource("1_nfedj")
+surface_material_override/0 = SubResource("ShaderMaterial_oe08h")

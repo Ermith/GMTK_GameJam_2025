@@ -1,10 +1,30 @@
-[gd_scene load_steps=7 format=3 uid="uid://d60lah0lbjr5"]
+[gd_scene load_steps=10 format=3 uid="uid://d60lah0lbjr5"]
 
 [ext_resource type="Script" uid="uid://372750u8m601" path="res://levels/level_base.gd" id="1_qc6i3"]
 [ext_resource type="PackedScene" uid="uid://c7l2mq1d2hma" path="res://objects/world/scenes/galaxy.tscn" id="2_sklrn"]
+[ext_resource type="PackedScene" uid="uid://bx8ran4d53pps" path="res://objects/world/scenes/galaxy_background.tscn" id="2_wtvao"]
 [ext_resource type="PackedScene" uid="uid://k4gtnyctrda" path="res://objects/player/player_snake.tscn" id="3_d65c1"]
+[ext_resource type="Shader" uid="uid://cdcdlvw2k5u2h" path="res://objects/world/shaders/galaxy_background.gdshader" id="3_smvv8"]
 [ext_resource type="PackedScene" uid="uid://dffsgo3pt25hk" path="res://sounds/background_audio.tscn" id="4_2i5ty"]
 [ext_resource type="AudioStream" uid="uid://ci0g8w2svyc2g" path="res://sounds/music/DSGNDron_Fallen_Angel_SYSO_SYSO018.mp3" id="5_wtvao"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5kejm"]
+render_priority = 0
+shader = ExtResource("3_smvv8")
+shader_parameter/horizontalMovement = 0.1
+shader_parameter/verticalMovement = 0.1
+shader_parameter/frequencyStar = 0.1
+shader_parameter/sizeStar = 100.0
+shader_parameter/brightnessStar = 3.0
+shader_parameter/shineFrequencyStar = 8.0
+shader_parameter/transparencyStar = 0.0
+shader_parameter/starIterations = 3
+shader_parameter/frequencyBgStar = 0.996
+shader_parameter/shineFrequencyBgStar = 0.0
+shader_parameter/transparencyBgStar = 0.0
+shader_parameter/colorBackground = Color(0.0253333, 0.02, 0.1, 1)
+shader_parameter/transparencyBackground = 0.0
+shader_parameter/seed = 0.0
 
 [sub_resource type="Environment" id="Environment_d65c1"]
 background_mode = 1
@@ -14,6 +34,10 @@ sky_custom_fov = 20.0
 [node name="GameScene" type="Node3D"]
 script = ExtResource("1_qc6i3")
 PreferredUI = 5
+
+[node name="GalaxyBackground" parent="." instance=ExtResource("2_wtvao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.25477)
+surface_material_override/0 = SubResource("ShaderMaterial_5kejm")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_d65c1")
