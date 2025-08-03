@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://d60lah0lbjr5"]
+[gd_scene load_steps=7 format=3 uid="uid://d60lah0lbjr5"]
 
 [ext_resource type="Script" uid="uid://372750u8m601" path="res://levels/level_base.gd" id="1_qc6i3"]
 [ext_resource type="PackedScene" uid="uid://c7l2mq1d2hma" path="res://objects/world/scenes/galaxy.tscn" id="2_sklrn"]
 [ext_resource type="PackedScene" uid="uid://k4gtnyctrda" path="res://objects/player/player_snake.tscn" id="3_d65c1"]
+[ext_resource type="PackedScene" uid="uid://dffsgo3pt25hk" path="res://sounds/background_audio.tscn" id="4_2i5ty"]
+[ext_resource type="AudioStream" uid="uid://ci0g8w2svyc2g" path="res://sounds/music/DSGNDron_Fallen_Angel_SYSO_SYSO018.mp3" id="5_wtvao"]
 
 [sub_resource type="Environment" id="Environment_d65c1"]
 background_mode = 1
@@ -23,5 +25,11 @@ player = NodePath("../PlayerSnake")
 [node name="PlayerSnake" parent="." instance=ExtResource("3_d65c1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.956604, 0)
 max_distance_from_start = 9.0
+
+[node name="BackgroundAudio" parent="." instance=ExtResource("4_2i5ty")]
+stream = ExtResource("5_wtvao")
+autoplay = true
+parameters/looping = true
+parameters/looping = true
 
 [connection signal="looped" from="PlayerSnake" to="Galaxy" method="_on_player_snake_looped"]

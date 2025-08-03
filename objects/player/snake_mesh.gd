@@ -352,3 +352,13 @@ func contains_world_coordinates_2dpoint(point: Vector2) -> bool:
 		return false
 	point -= Vector2(global_position.x, global_position.y)
 	return contains_2dpoint(point)
+
+func smooth_out_points(new_count: int = -1) -> void:
+	var point_count: int = points.size() if new_count < 0 else new_count
+	var new_points: PackedVector3Array = PackedVector3Array()
+	var length: float = curve.get_baked_length()
+	for i: int in range(point_count):
+		var pos: float = length * (i / float(point_count - 1))
+		var point: Vector3 = curve.sample_baked(pos, cubic_interpolation)
+		new_points.append(point)
+	points = new_points
