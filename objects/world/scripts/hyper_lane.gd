@@ -111,20 +111,20 @@ func civilize(civilization: Civilization, star: Star) -> void:
 		var to2d: Vector2 = Vector2(to.global_position.x, to.global_position.y)
 		
 		for point_index: int in range(points.size() - 1):
-			var p1_3d: Vector3 = points[point_index]
-			var p2_3d: Vector3 = points[point_index + 1]
+			var p1_3d: Vector3 = points[point_index] + _player.global_position
+			var p2_3d: Vector3 = points[point_index + 1] + _player.global_position
 			
 			var p1: Vector2 = Vector2(p1_3d.x, p1_3d.y)
 			var p2: Vector2 = Vector2(p2_3d.x, p2_3d.y)
 			var intersection_nullable: Variant = \
 				Geometry2D.segment_intersects_segment(p1, p2, from2d, to2d)
 			
+			scanned_length += p1_3d.distance_to(p2_3d)
 			if not intersection_nullable is Vector2:
-				scanned_length += p1_3d.distance_to(p2_3d)
 				continue
 			
 			var intersection: Vector2 = intersection_nullable
-			scanned_length += p1.distance_to(intersection)
+			#scanned_length += p1.distance_to(intersection)
 			player_cut_length = _player.register_cut_callback(cancel_planned_cut, scanned_length)
 			if not _intersects_player:
 				_cut_player_timer = cut_player_delay
