@@ -16,6 +16,7 @@ signal looped(snake_mesh: SnakeMesh)
 @export var max_distance_from_start: float = INF
 
 @export var loop_effect_scene: PackedScene = preload("res://objects/player/loop_effect.tscn")
+const DEAD_SNAKE: PackedScene = preload("res://objects/player/dead_snake.tscn")
 
 var cur_turning_speed: float = base_turning_speed
 var head_position: Vector3 = Vector3(0, 0, 0)
@@ -25,6 +26,7 @@ var collision_cooldown: float = 0.0
 var max_colision_cooldown: float = 0.1
 var average_turning_speed: float = base_turning_speed
 var _last_position: Vector3
+var totalLengthLost: float = 0.0
 
 class CutCallback:
 	var length: float
@@ -49,6 +51,7 @@ func reset_snake() -> void:
 	distance_travelled_since_last_point = 0.0
 	stored_backup_curve_point = Vector3.ZERO
 	_last_position = head_position + global_position
+	totalLengthLost = 0.0
 
 func get_speed() -> float:
 	return game_stats.base_speed
@@ -164,6 +167,9 @@ func _physics_process(delta: float) -> void:
 	game_stats.current_length = snake_mesh.curve.get_baked_length()
 
 func _process(_delta: float) -> void:
+	var shader: ShaderMaterial = snake_mesh.get_material_override() as ShaderMaterial
+	if shader:
+		shader.set_shader_parameter("lengthOffset", totalLengthLost)
 	if snake_mesh.points.size() < 2:
 		return
 	camera.set_target_position(head_position)
@@ -215,10 +221,9 @@ func get_last_position2d() -> Vector2:
 	return Vector2(_last_position.x, _last_position.y)
 
 func cut_off_prefix(length_of_prefix: float) -> void:
-	print(length_of_prefix)
 	if length_of_prefix <= 0:
 		return
-	var _split_off_points: PackedVector3Array = snake_mesh.split_off_prefix(length_of_prefix)
+	var split_off_points: PackedVector3Array = snake_mesh.split_off_prefix(length_of_prefix)
 	snake_mesh.refresh_curve()
 	var length_change: float = snake_mesh.curve.get_baked_length() - game_stats.current_length
 	game_stats.current_length = snake_mesh.curve.get_baked_length()
@@ -236,3 +241,12 @@ func cut_off_prefix(length_of_prefix: float) -> void:
 				if callback_obj not in visited_lanes:
 					visited_lanes.append(callback_obj)
 					callback_obj.player_cut_length += length_change
+
+	var dead_snake: DeadSnake = DEAD_SNAKE.instantiate()
+	dead_snake.lengthOffset = totalLengthLost
+	get_parent().add_child(dead_snake)
+	dead_snake.snake_mesh.radius = snake_mesh.radius
+	dead_snake.init(split_off_points)
+	dead_snake.global_position = global_position
+
+	totalLengthLost -= length_change

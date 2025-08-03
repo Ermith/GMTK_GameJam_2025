@@ -9,6 +9,11 @@
 render_priority = 0
 shader = ExtResource("2_7cxnn")
 shader_parameter/length = 1.0
+shader_parameter/timeOverride = -1.0
+shader_parameter/alphaMult = 1.0
+shader_parameter/saturation = 1.0
+shader_parameter/lengthOffset = 0.0
+shader_parameter/headLength = 1.0
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_rcpxh"]
 
@@ -28,5 +33,5 @@ head_distance_not_colored = 3.0
 metadata/_custom_type_script = "uid://dg5jqs15gmbgn"
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7.52644)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
 script = ExtResource("4_ma2x5")

@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://84o8708xte74"]
+
+[ext_resource type="Script" uid="uid://dbxdawc3hxaqy" path="res://objects/player/dead_snake.gd" id="1_r4r8l"]
+[ext_resource type="Shader" uid="uid://cexqci24owqp" path="res://objects/player/snake_shader.gdshader" id="2_4uyr4"]
+[ext_resource type="Script" uid="uid://dg5jqs15gmbgn" path="res://objects/player/snake_mesh.gd" id="2_c7r5w"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6y3gy"]
+render_priority = 0
+shader = ExtResource("2_4uyr4")
+shader_parameter/length = 1.0
+shader_parameter/timeOverride = -1.0
+shader_parameter/alphaMult = 1.0
+shader_parameter/saturation = 1.0
+shader_parameter/lengthOffset = 0.0
+shader_parameter/headLength = 1.0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ej84n"]
+
+[node name="DeadSnake" type="Node3D"]
+script = ExtResource("1_r4r8l")
+
+[node name="SnakeMesh" type="MeshInstance3D" parent="."]
+material_override = SubResource("ShaderMaterial_6y3gy")
+mesh = SubResource("ArrayMesh_ej84n")
+script = ExtResource("2_c7r5w")
+metadata/_custom_type_script = "uid://dg5jqs15gmbgn"

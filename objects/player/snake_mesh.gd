@@ -326,6 +326,7 @@ func split_off_prefix(offset: float, prefix_offset_shift: float = 0) -> PackedVe
 		points.remove_at(i)
 
 	points.insert(0, new_point_kept)
+	new_points.reverse()
 	return new_points
 
 func get_clockwiseness() -> int:
