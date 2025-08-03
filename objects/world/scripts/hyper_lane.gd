@@ -1,7 +1,7 @@
 extends Node3D
 class_name HyperLane
 
-@export var cut_player_delay: float = 2.0
+@export var cut_player_delay: float = 6.0
 @export var cut_color: Color = Color.RED
 
 @onready var mesh_instance_3d: MeshInstance3D = $MeshInstance3D
