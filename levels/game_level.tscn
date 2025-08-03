@@ -19,7 +19,7 @@ environment = SubResource("Environment_d65c1")
 [node name="Galaxy" parent="." instance=ExtResource("2_sklrn")]
 
 [node name="PlayerSnake" parent="." instance=ExtResource("3_d65c1")]
-
-[connection signal="looped" from="PlayerSnake" to="Galaxy" method="_on_player_snake_looped"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.956604, 0)
 max_distance_from_start = 9.0
+
+[connection signal="looped" from="PlayerSnake" to="Galaxy" method="_on_player_snake_looped"]
