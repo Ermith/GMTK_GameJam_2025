@@ -7,6 +7,11 @@ extends Node3D
 @export var star_height_dev: float = 0.25
 @export var player: Player
 
+@export var radius: float = 15.0
+@export var inner_radius: float = 5.0
+@export var rings: int = 8
+@export var first_ring_segments: int = 15
+
 var stars: Array[Star]
 
 func disc_area(radius: float) -> float: return radius * radius * PI
@@ -64,7 +69,7 @@ func calculate_sectors(radius: float, radius_min: float, rings: int, first_ring_
 	return out_sectors
 
 func _ready() -> void:
-	var sectors: Array[Sector] = calculate_sectors(7.0, 1.3, 8, 15)
+	var sectors: Array[Sector] = calculate_sectors(radius, inner_radius, rings, first_ring_segments)
 	for i: int in range(1):
 		for sector: Sector in sectors:
 			var pos: Vector2 = sector.get_random_pos()

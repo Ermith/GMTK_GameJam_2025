@@ -7,6 +7,7 @@ render_priority = 0
 shader = ExtResource("1_m1okm")
 shader_parameter/color = Color(0.5, 0.5, 1, 1)
 shader_parameter/color2 = Color(0.5, 0.5, 1, 1)
+shader_parameter/color_override = Color(1, 0, 0, 0)
 shader_parameter/intensity = 0.333
 shader_parameter/width_factor = 20.0
 shader_parameter/tube_axis = Vector3(1, 0, 0)

@@ -6,7 +6,7 @@ var frontier: Array[Star]
 var inner_stars: Array[Star]
 var color: Color
 
-@export var expansion_period: float = 5.0
+@export var expansion_period: float = 7.5
 var expansion_timer: float
 
 func initizlize(star: Star, in_color: Color) -> void:
@@ -26,9 +26,9 @@ func _process(delta: float) -> void:
 
 func expand() -> void:
 	# BECAUSE FUCKING LEAK INVALID VALUES WTF
-	cleanup_stars(frontier)
-	cleanup_stars(owned_stars)
-	cleanup_stars(inner_stars)
+	cleanup_stars(frontier, true)
+	cleanup_stars(owned_stars, false)
+	cleanup_stars(inner_stars, false)
 	
 	if owned_stars.is_empty():
 		queue_free()
@@ -48,10 +48,10 @@ func expand() -> void:
 	inner_stars.append(frontier[random_index])
 	frontier.remove_at(random_index)
 
-func cleanup_stars(stars: Array[Star]) -> void:
+func cleanup_stars(stars: Array[Star], cleanup_non_expandable: bool) -> void:
 	var index: int = 0
 	while index < len(stars):
-		if not is_instance_valid(stars[index]) or not stars[index].can_expand():
+		if not is_instance_valid(stars[index]) or (cleanup_non_expandable and not stars[index].can_expand()):
 			# STAR NOT FUCKING VALID WTF I FUCKING CANT (handled but WHY?!)
 			stars.remove_at(index)
 		else:
