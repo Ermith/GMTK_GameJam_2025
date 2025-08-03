@@ -109,7 +109,6 @@ func collision_scan() -> void:
 			var loop_effect: LoopEffect = loop_effect_scene.instantiate()
 			get_parent().add_child(loop_effect)
 			loop_effect.init(split_off_points, goodness_to_color(col_goodness))
-			loop_effect.update_points()
 			loop_effect.global_position = global_position
 			loop_effect.mesh.radius = snake_mesh.radius
 			looped.emit(loop_effect.mesh)
