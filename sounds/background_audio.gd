@@ -7,5 +7,5 @@ func _ready() -> void:
 	volume_linear *= AudioClipManager.masterVolume * AudioClipManager.musicVolume
 	AudioClipManager.volume_settings_changed.connect(volume_settings_changed)
 	
-func volume_settings_changed(master: float, music: float, sfx: float) -> void:
+func volume_settings_changed(master: float, music: float, _sfx: float) -> void:
 	volume_linear = start_volume * master * music

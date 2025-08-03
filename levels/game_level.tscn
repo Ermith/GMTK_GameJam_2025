@@ -29,6 +29,5 @@ max_distance_from_start = 9.0
 stream = ExtResource("5_wtvao")
 autoplay = true
 parameters/looping = true
-parameters/looping = true
 
 [connection signal="looped" from="PlayerSnake" to="Galaxy" method="_on_player_snake_looped"]

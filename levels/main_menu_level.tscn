@@ -12,4 +12,3 @@ PreferredUI = 1
 stream = ExtResource("3_ftkqg")
 autoplay = true
 parameters/looping = true
-parameters/looping = true

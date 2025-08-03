@@ -35,7 +35,7 @@ func set_volume_multipliers(master: float, music: float, sound: float) -> void:
 	
 	volume_settings_changed.emit(masterVolume, musicVolume, sfxVolume)
 	
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if not queue.is_empty() and not available.is_empty():
 		var q_element: SoundQueueItem = queue.pop_front()
 		var clip_path: String = q_element.clip_path
