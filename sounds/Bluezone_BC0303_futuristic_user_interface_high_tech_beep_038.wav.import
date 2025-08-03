@@ -2,7 +2,11 @@
 
 importer="wav"
 type="AudioStreamWAV"
+<<<<<<< HEAD
 uid="uid://b4u6gleiyoyi"
+=======
+uid="uid://uba52rvaa73m"
+>>>>>>> 73843c13e359363de1a30cdd8b51bebc102d8c3a
 path="res://.godot/imported/Bluezone_BC0303_futuristic_user_interface_high_tech_beep_038.wav-f8efa5bd43e10013e25f3cac2f6c3db3.sample"
 
 [deps]

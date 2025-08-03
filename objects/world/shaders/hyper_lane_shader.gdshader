@@ -1,7 +1,7 @@
 shader_type spatial;
 
-uniform vec3 color: source_color = vec3(0.5, 0.5, 1.0);
-uniform vec3 color2: source_color = vec3(0.5, 0.5, 1.0);
+uniform vec4 color: source_color = vec4(0.5, 0.5, 1.0, 1.0);
+uniform vec4 color2: source_color = vec4(0.5, 0.5, 1.0, 1.0);
 uniform float intensity: hint_range(0.0, 10.0) = 1.0;
 uniform float width_factor: hint_range(0.0, 100.0) = 20.0;
 
@@ -50,6 +50,10 @@ vec3 project_onto_plane(vec3 v, vec3 plane_normal) {
 // Called for every pixel the material is visible on.
 void fragment() {
 	float t = clamp(UV.y + 0.69, 0.0, 1.0);
-    EMISSION = mix(color, color2, pow(t, 10.0)) * intensity; // glow effect
+	vec4 mixed = mix(color, color2, pow(t, 10.0));
+	EMISSION = mixed.rgb * intensity; // glow effect
 	ALPHA = pow(distance(UV.x, 0.5) * 2.0, width_factor);
+	float dist_from_end = min(UV.y, 0.5 - UV.y) / 0.5;
+	ALPHA *= smoothstep(0.0, 1.0, dist_from_end * 3.0); // fade out towards the ends
+	ALPHA *= mixed.a;
 }

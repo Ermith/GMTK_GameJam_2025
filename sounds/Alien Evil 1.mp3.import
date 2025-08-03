@@ -2,7 +2,11 @@
 
 importer="mp3"
 type="AudioStreamMP3"
+<<<<<<< HEAD
 uid="uid://c57ssutcj8d8e"
+=======
+uid="uid://2v8oh3rtqvbp"
+>>>>>>> 73843c13e359363de1a30cdd8b51bebc102d8c3a
 path="res://.godot/imported/Alien Evil 1.mp3-ae38c32b510068fab7f728a23260a1ff.mp3str"
 
 [deps]

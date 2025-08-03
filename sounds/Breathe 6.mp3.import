@@ -2,7 +2,11 @@
 
 importer="mp3"
 type="AudioStreamMP3"
+<<<<<<< HEAD
 uid="uid://clpwy0k2d8l5c"
+=======
+uid="uid://uw54csnhg1hn"
+>>>>>>> 73843c13e359363de1a30cdd8b51bebc102d8c3a
 path="res://.godot/imported/Breathe 6.mp3-b258e985774879c99227c0cf78dade63.mp3str"
 
 [deps]

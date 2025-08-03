@@ -24,7 +24,7 @@ func calculate_sectors(radius: float, radius_min: float, rings: int, first_ring_
 	var civilization_spawn_count: int = civilization_spawn_colors.size()
 	for i: int in range(civilization_spawn_count):
 		civilization_rings.append(i)
-		civilization_angles.append((360 / civilization_spawn_count) * i)
+		civilization_angles.append((360.0 / civilization_spawn_count) * i)
 	civilization_rings.shuffle()
 	
 	var radius_diff: float = radius - radius_min
@@ -50,7 +50,6 @@ func calculate_sectors(radius: float, radius_min: float, rings: int, first_ring_
 			if civilization_index != -1 and\
 				sector.contains_angle(civilization_angles[civilization_index]):
 					sector.spawn = true
-					print(civilization_index)
 					civilization_rings.remove_at(civilization_index)
 					civilization_angles.remove_at(civilization_index)
 			else:
@@ -105,3 +104,15 @@ func _ready() -> void:
 			civilization_index += 1
 			add_child(civilization)
 			
+
+
+func _on_player_snake_looped(snake_mesh: SnakeMesh) -> void:
+	var to_remove: Array[Star]
+	for star:Star in stars:
+		if snake_mesh.contains_world_coordinates_2dpoint(\
+			Vector2(star.global_position.x, star.global_position.y)):
+				to_remove.append(star)
+	
+	for star: Star in to_remove:
+		stars.erase(star)
+		star.destroy()

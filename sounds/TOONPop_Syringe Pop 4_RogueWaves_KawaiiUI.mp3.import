@@ -2,7 +2,11 @@
 
 importer="mp3"
 type="AudioStreamMP3"
+<<<<<<< HEAD
 uid="uid://bvf2ktucvi8p0"
+=======
+uid="uid://dh4bvwrcp6ni2"
+>>>>>>> 73843c13e359363de1a30cdd8b51bebc102d8c3a
 path="res://.godot/imported/TOONPop_Syringe Pop 4_RogueWaves_KawaiiUI.mp3-9d2f49d925733fdded15cec10b0a6cd3.mp3str"
 
 [deps]
