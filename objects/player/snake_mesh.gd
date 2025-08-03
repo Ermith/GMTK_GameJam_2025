@@ -306,6 +306,28 @@ func split_off_suffix(offset: float, suffix_offset_shift: float = 0) -> PackedVe
 	points.append(new_point_kept)
 	return new_points
 
+func split_off_prefix(offset: float, prefix_offset_shift: float = 0) -> PackedVector3Array:
+	var new_point_kept: Vector3 = curve.sample_baked(offset, cubic_interpolation)
+	var new_point_in_prefix: Vector3 = curve.sample_baked(offset - prefix_offset_shift, cubic_interpolation)
+	var first_index_kept: int = points.size() - 1
+	var length_so_far: float = 0.0
+	for i: int in range(1, points.size()):
+		var point: Vector3 = points[i]
+		var prev_point: Vector3 = points[i - 1]
+		length_so_far += point.distance_to(prev_point)
+		if length_so_far >= offset:
+			first_index_kept = i
+			break
+	
+	var new_points: PackedVector3Array = PackedVector3Array()
+	new_points.append(new_point_in_prefix)
+	for i: int in range(first_index_kept - 1, -1, -1):
+		new_points.append(points[i])
+		points.remove_at(i)
+
+	points.insert(0, new_point_kept)
+	return new_points
+
 func get_clockwiseness() -> int:
 	if clockwiseness != 0:
 		return clockwiseness
