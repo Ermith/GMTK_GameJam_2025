@@ -27,26 +27,19 @@ func set_lane(source: Star, target: Star) -> void:
 	
 	from = source
 	to = target
-	set_color(from)
-	set_color(to)
+	set_color(from, from.color)
+	set_color(to, from.color)
 
-func set_color(star: Star) -> void:
+func set_color(star: Star, color: Color) -> void:
 	var color_param: String = "color"
 	if star == from:
 		color_param = "color2"
 		
-	hyper_lane_material.set_shader_parameter(color_param, star.color)
+	hyper_lane_material.set_shader_parameter(color_param, color)
 
 func civilize(civilization: Civilization, star: Star) -> void:
-	set_color(star)
+	set_color(star, civilization.color)
 
 func get_other(this_star: Star) -> Star:
 	if this_star == from: return to
 	else: return from
-	
-func destroy() -> void:
-	from.neightbors.erase(to)
-	to.neightbors.erase(from)
-	from.hyper_lanes.erase(self)
-	to.hyper_lanes.erase(self)
-	queue_free()

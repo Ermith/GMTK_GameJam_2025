@@ -33,8 +33,13 @@ func can_expand() -> bool:
 	return false
 
 func destroy() -> void:
+	if civilization != null:
+		civilization.remove_star(self)
+	
 	for hyper_lane: HyperLane in hyper_lanes:
 		var neighbor: Star = hyper_lane.get_other(self)
+		if neighbor == self:
+			print("FUCK")
 		neighbor.neightbors.erase(self)
 		neighbor.hyper_lanes.erase(hyper_lane)
 		neightbors.erase(neighbor)
