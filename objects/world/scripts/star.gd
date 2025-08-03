@@ -19,7 +19,7 @@ func _ready() -> void:
 func set_color(in_color: Color) -> void:
 	shader_material.set_shader_parameter("star_color", in_color)
 	color = in_color
-	
+
 func civilize(in_civilization: Civilization) -> void:
 	if civilization != null:
 		civilization.remove_star(self)

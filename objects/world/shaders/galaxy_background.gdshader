@@ -38,7 +38,7 @@ void fragment() {
 	float travelx = TIME*horizontalMovement;
 	float travely = TIME*verticalMovement;
 	float color = 0.0;
-	EMISSION = colorBackground.rgb;
+	EMISSION = colorBackground.rgb * 0.5;
 	
 	/*/
 	for(int i = 1; i < 1 + starIterations; i++) {
