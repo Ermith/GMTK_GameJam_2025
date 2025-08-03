@@ -7,7 +7,7 @@ var inner_stars: Array[Star]
 var color: Color
 var _player: Player
 
-@export var expansion_period: float = 7.5
+@export var expansion_period: float = 15.0
 var expansion_timer: float
 
 func initizlize(star: Star, in_color: Color, player: Player) -> void:

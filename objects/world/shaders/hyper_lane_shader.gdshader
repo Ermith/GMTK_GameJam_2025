@@ -1,7 +1,7 @@
 shader_type spatial;
 
-uniform vec4 color: source_color = vec4(0.5, 0.5, 1.0, 1.0);
-uniform vec4 color2: source_color = vec4(0.5, 0.5, 1.0, 1.0);
+uniform vec4 color: source_color = vec4(0.5, 0.5, 1.0, 0.3);
+uniform vec4 color2: source_color = vec4(0.5, 0.5, 1.0, 0.3);
 uniform vec4 color_override: source_color = vec4(1.0, 0.0, 0.0, 0.0);
 uniform float intensity: hint_range(0.0, 10.0) = 1.0;
 uniform float width_factor: hint_range(0.0, 100.0) = 20.0;
@@ -56,6 +56,6 @@ void fragment() {
 	EMISSION = mix(EMISSION, color_override.rgb, color_override.a);
 	ALPHA = pow(distance(UV.x, 0.5) * 2.0, width_factor);
 	float dist_from_end = min(UV.y, 0.5 - UV.y) / 0.5;
-	ALPHA *= smoothstep(0.0, 1.0, dist_from_end * 3.0); // fade out towards the ends
+	ALPHA *= smoothstep(0.0, 1.0, dist_from_end * 4.0); // fade out towards the ends
 	ALPHA *= mixed.a;
 }

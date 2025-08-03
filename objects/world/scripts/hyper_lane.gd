@@ -37,8 +37,12 @@ func set_lane(source: Star, target: Star, player: Player) -> void:
 	
 	from = source
 	to = target
-	set_color(from, from.color)
-	set_color(to, from.color)
+	var from_color: Color = from.color
+	from_color.a = 0.5 if from.civilization == null else 0.9
+	var to_color: Color = to.color
+	to_color.a = 0.5 if to.civilization == null else 0.9
+	set_color(from, from_color)
+	set_color(to, to_color)
 	set_player(player)
 
 func set_color(star: Star, color: Color) -> void:
@@ -97,9 +101,9 @@ func plan_cut_player(intersection: Vector2) -> void:
 func civilize(civilization: Civilization, star: Star) -> void:
 	var color: Color = civilization.color
 	if civilization == null:
-		color.a = 0.3
+		color.a = 0.5
 	else:
-		color.a = 0.69
+		color.a = 0.9
 	set_color(star, color)
 	
 	# civilized both into one civilization

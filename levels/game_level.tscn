@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://372750u8m601" path="res://levels/level_base.gd" id="1_qc6i3"]
 [ext_resource type="PackedScene" uid="uid://c7l2mq1d2hma" path="res://objects/world/scenes/galaxy.tscn" id="2_sklrn"]
-[ext_resource type="PackedScene" uid="uid://bx8ran4d53pps" path="res://objects/world/scenes/galaxy_background.tscn" id="2_wtvao"]
+[ext_resource type="PackedScene" path="res://objects/world/scenes/galaxy_background.tscn" id="2_wtvao"]
 [ext_resource type="PackedScene" uid="uid://k4gtnyctrda" path="res://objects/player/player_snake.tscn" id="3_d65c1"]
 [ext_resource type="Shader" uid="uid://cdcdlvw2k5u2h" path="res://objects/world/shaders/galaxy_background.gdshader" id="3_smvv8"]
-[ext_resource type="PackedScene" uid="uid://dffsgo3pt25hk" path="res://sounds/background_audio.tscn" id="4_2i5ty"]
+[ext_resource type="PackedScene" path="res://sounds/background_audio.tscn" id="4_2i5ty"]
 [ext_resource type="AudioStream" uid="uid://ci0g8w2svyc2g" path="res://sounds/music/DSGNDron_Fallen_Angel_SYSO_SYSO018.mp3" id="5_wtvao"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5kejm"]
@@ -45,7 +45,7 @@ surface_material_override/0 = SubResource("ShaderMaterial_5kejm")
 environment = SubResource("Environment_d65c1")
 
 [node name="Galaxy" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_sklrn")]
-civilization_spawn_colors = Array[Color]([Color(1, 0, 0, 1), Color(0.0178115, 0.995554, 0.297601, 1), Color(1, 0.973, 0.19, 1), Color(1, 0.191717, 0.744921, 1), Color(0.716667, 1, 0, 1), Color(0.668173, 0.163122, 1, 1), Color(0, 1, 0.716667, 1), Color(0.705673, 0.568984, 0.938477, 1), Color(0.96, 0.512, 0, 1)])
+civilization_spawn_colors = Array[Color]([Color(1, 0, 0, 1), Color(0.170223, 0.857062, 0.0561365, 1), Color(1, 0.973, 0.19, 1), Color(1, 0.191717, 0.744921, 1), Color(0.716667, 1, 0, 1), Color(0.668173, 0.163122, 1, 1), Color(0.705673, 0.568984, 0.938477, 1), Color(0.96, 0.512, 0, 1)])
 player = NodePath("../PlayerSnake")
 
 [node name="PlayerSnake" parent="." instance=ExtResource("3_d65c1")]

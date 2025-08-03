@@ -5,7 +5,7 @@
 
 [sub_resource type="TubeTrailMesh" id="TubeTrailMesh_evvsl"]
 material = ExtResource("2_lepuh")
-radius = 0.02
+radius = 0.05
 radial_steps = 5
 sections = 2
 section_rings = 1

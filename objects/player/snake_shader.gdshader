@@ -78,6 +78,7 @@ vec4 base_color(vec2 uv) {
 
 	dimming = clamp(dimming, 0.0, 1.0);
 	v *= dimming;
+	v = pow(v, 0.9);
 	v = smoothstep2(v);
 	v = smoothstep2(v);
 	v = smoothstep2(v);

@@ -18,9 +18,9 @@ void vertex() {
 uniform vec3 star_color : source_color = vec3(0.0, 0.5, 1.0);
 uniform float cross_factor : hint_range(0.0, 100.0) = 40.0;
 uniform float cross_intensity : hint_range(0.0, 1.0) = 0.6;
-uniform float mid_power : hint_range(0.0, 10.0) = 4.5;
+uniform float mid_power : hint_range(0.0, 100.0) = 8.0;
 uniform float glow_factor : hint_range(0.0, 10.0) = 0.5;
-uniform float intensity : hint_range(0.0, 20.0) = 1.9;
+uniform float intensity : hint_range(0.0, 20.0) = 0.8;
 uniform float mid_near_anim_factor : hint_range(0.0, 10.0) = 0.1;
 uniform float intensity_anim_factor : hint_range(0.0, 10.0) = 0.4;
 uniform float anim_speed_modifier : hint_range(0.0, 100.0) = 10.0;
@@ -49,9 +49,9 @@ void fragment() {
 	float shape = cross_shape * mid_near_power;
 	float final_shape = mix(shape * cross_intensity, mid_near_power, mid_near_power*glow_factor);
 	final_shape = clamp(final_shape, 0.0, 1.0);
-	vec3 final_color = mix(star_color, vec3(1.0), 0.0); // wtf
+	vec3 final_color = mix(star_color, vec3(1.0), final_shape * final_shape);
 
-	EMISSION = final_color * intensity + anim_modifier * intensity_anim_factor;
+	EMISSION = final_color * (intensity + anim_modifier * intensity_anim_factor);
 
 	//EMISSION = vec3(1.0);
 	ALPHA = final_shape;
