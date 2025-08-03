@@ -12,6 +12,6 @@ func _ready() -> void:
 	update_snake_stats()
 
 func update_snake_stats() -> void:
-	current_label.text = String.num(game_stats.current_length, 2)
-	remaining_label.text =  String.num(game_stats.remaining_length, 2)
+	current_label.text = "%.1f" % game_stats.current_length
+	remaining_label.text = "%.1f" % game_stats.remaining_length
 	
