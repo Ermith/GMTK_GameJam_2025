@@ -13,6 +13,7 @@ extends Node3D
 @export var first_ring_segments: int = 15
 
 var stars: Array[Star]
+var current_civilization_count: int = 0
 
 func disc_area(radius: float) -> float: return radius * radius * PI
 
@@ -102,6 +103,7 @@ func _ready() -> void:
 			stars[i].hyper_lanes.append(hyper_lane)
 			stars[j].hyper_lanes.append(hyper_lane)
 	
+	current_civilization_count = civilization_spawn_colors.size()
 	var civilization_index: int = 0
 	for star: Star in stars:
 		if star.sector.spawn:
@@ -109,7 +111,12 @@ func _ready() -> void:
 			civilization.initizlize(star, civilization_spawn_colors[civilization_index])
 			civilization_index += 1
 			add_child(civilization)
-			
+			civilization.tree_exited.connect(civilization_died)
+
+func civilization_died() -> void:
+	current_civilization_count -= 1
+	if current_civilization_count <= 0:
+		GameInstance.PlayerVictorious()
 
 
 func _on_player_snake_looped(snake_mesh: SnakeMesh) -> void:
