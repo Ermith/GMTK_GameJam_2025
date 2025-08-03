@@ -2,6 +2,7 @@ extends Node3D
 class_name Player
 
 signal ran_out_of_length
+signal looped(snake_mesh: SnakeMesh)
 
 @export var game_stats: GameStats = preload("res://resources/game_stats.tres")
 
@@ -94,6 +95,7 @@ func collision_scan() -> void:
 			loop_effect.update_points()
 			loop_effect.global_position = global_position
 			loop_effect.mesh.radius = snake_mesh.radius
+			looped.emit(loop_effect.mesh)
 
 func check_for_escaping_galaxy() -> void:
 	if head_position.length() < max_distance_from_start:

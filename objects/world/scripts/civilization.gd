@@ -25,23 +25,39 @@ func _process(delta: float) -> void:
 		expand()
 
 func expand() -> void:
-	cleanup_frontier()
+	# BECAUSE FUCKING LEAK INVALID VALUES WTF
+	cleanup_stars(frontier)
+	cleanup_stars(owned_stars)
+	cleanup_stars(inner_stars)
+	
+	if owned_stars.is_empty():
+		queue_free()
+		return
+	
 	if frontier.is_empty():
 		return
 	
 	var random_index: int = randi() % frontier.size()
+	
 	for neighbor: Star in frontier[random_index].neightbors:
 		neighbor.civilize(self)
-		if neighbor.can_expand():
+		if neighbor.can_expand() and neighbor not in frontier:
 			frontier.append(neighbor)
-		
+			owned_stars.append(neighbor)
+	
+	inner_stars.append(frontier[random_index])
 	frontier.remove_at(random_index)
 
-func cleanup_frontier() -> void:
-	var to_remove: Array[Star]
-	for star: Star in frontier:
-		if not star.can_expand():
-			to_remove.append(star)
-	
-	for star: Star in to_remove:
-		frontier.erase(star)
+func cleanup_stars(stars: Array[Star]) -> void:
+	var index: int = 0
+	while index < len(stars):
+		if not is_instance_valid(stars[index]) or not stars[index].can_expand():
+			# STAR NOT FUCKING VALID WTF I FUCKING CANT (handled but WHY?!)
+			stars.remove_at(index)
+		else:
+			index += 1
+
+func remove_star(star: Star) -> void:
+	owned_stars.erase(star)
+	frontier.erase(star)
+	inner_stars.erase(star)

@@ -33,6 +33,21 @@ func can_expand() -> bool:
 			
 	return false
 
+func destroy() -> void:
+	if civilization != null:
+		civilization.remove_star(self)
+	
+	for hyper_lane: HyperLane in hyper_lanes:
+		var neighbor: Star = hyper_lane.get_other(self)
+		if neighbor == self:
+			print("FUCK")
+		neighbor.neightbors.erase(self)
+		neighbor.hyper_lanes.erase(hyper_lane)
+		neightbors.erase(neighbor)
+		hyper_lane.queue_free()
+	
+	queue_free()
+
 func set_size(size: float) -> void:
 	var mesh: PlaneMesh = mesh_instance_3d.mesh as PlaneMesh
 	mesh.size = Vector2(size, size)

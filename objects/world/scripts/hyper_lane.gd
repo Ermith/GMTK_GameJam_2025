@@ -27,15 +27,14 @@ func set_lane(source: Star, target: Star) -> void:
 	
 	from = source
 	to = target
-	set_color(from)
-	set_color(to)
+	set_color(from, from.color)
+	set_color(to, from.color)
 
-func set_color(star: Star) -> void:
+func set_color(star: Star, color: Color) -> void:
 	var color_param: String = "color"
 	if star == from:
 		color_param = "color2"
 
-	var color: Color = star.color
 	if star.civilization == null:
 		color.a = 0.3
 	else:
@@ -43,9 +42,8 @@ func set_color(star: Star) -> void:
 	hyper_lane_material.set_shader_parameter(color_param, color)
 
 func civilize(civilization: Civilization, star: Star) -> void:
-	set_color(star)
+	set_color(star, civilization.color)
 
 func get_other(this_star: Star) -> Star:
 	if this_star == from: return to
 	else: return from
-	
