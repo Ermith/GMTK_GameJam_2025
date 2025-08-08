@@ -81,7 +81,7 @@ func _ready() -> void:
 			#star.set_color(Color.from_hsv(randf(), 1.0, 1.0))
 			star.set_color(Color.DEEP_SKY_BLUE)
 			star.sector = sector
-			star.set_size(exp(randfn(log(1.0), 0.25)))
+			star.set_size(exp(randfn(log(1.5), 0.25)))
 
 	for i: int in range(stars.size()):
 		for j: int in range(stars.size()):

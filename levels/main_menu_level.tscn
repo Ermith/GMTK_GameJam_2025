@@ -50,10 +50,9 @@ autoplay = true
 parameters/looping = true
 
 [node name="PlayerSnake" parent="." instance=ExtResource("4_ftkqg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.956604, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.09394, -0.956604, 0)
 game_stats = SubResource("Resource_o7ktj")
 max_distance_from_start = 17.0
-autopilot = true
 
 [node name="GalaxyBackground" parent="." instance=ExtResource("5_mqod3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.25477)

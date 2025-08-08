@@ -63,7 +63,7 @@ vec4 base_color(vec2 uv) {
 		noise(vec2(float(lane) * 10000.0 + time(), cpos) + vec2(543.21, 67.89), 0.1 * 4.0) / 4.0;
 	rand /= 2.0;
 	v = 0.5 + 0.5 * v;
-	v = v * v * v;
+	v = v * v;
 	float distance_from_head = (length + lengthOffset) - cpos;
 	float headfactor = smoothstep(0.0, 1.0, 1.0 - clamp(distance_from_head / headLength, 0.0, 1.0));
 	rand = clamp(rand + headfactor, 0.0, 1.0);
@@ -78,7 +78,7 @@ vec4 base_color(vec2 uv) {
 
 	dimming = clamp(dimming, 0.0, 1.0);
 	v *= dimming;
-	v = pow(v, 0.9);
+	v = pow(v, 0.6);
 	v = smoothstep2(v);
 	v = smoothstep2(v);
 	v = smoothstep2(v);
